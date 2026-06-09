@@ -1,3 +1,13 @@
+<?php
+session_start();
+// Pastikan file koneksi sudah dibuat sesuai instruksi sebelumnya
+require '../database/koneksi.php';
+
+// Ambil semua data produk dari database, urutkan dari yang terbaru
+$query = "SELECT * FROM products ORDER BY id DESC";
+$result = mysqli_query($koneksi, $query);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -32,7 +42,7 @@
             color: var(--text-dark);
         }
 
-        /* --- SIDEBAR (Consistent with Dashboard) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             width: var(--sidebar-width);
             height: 100vh;
@@ -42,11 +52,13 @@
             border-right: 1px solid #EFEFEF;
             padding: 30px 24px;
             z-index: 100;
+            display: flex;
+            flex-direction: column;
         }
         .admin-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; }
         .admin-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
         
-        .sidebar-menu { list-style: none; padding: 0; }
+        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1;}
         .menu-link {
             display: flex; align-items: center; gap: 15px; padding: 14px 20px;
             color: var(--text-dark); font-weight: 500; border-radius: var(--radius-md);
@@ -120,7 +132,7 @@
             border: none;
             transition: var(--transition);
         }
-        .btn-add:hover { background-color: var(--secondary); transform: translateY(-2px); }
+        .btn-add:hover { background-color: var(--secondary); transform: translateY(-2px); color: #fff;}
 
         .btn-action {
             width: 34px;
@@ -132,9 +144,10 @@
             border: none;
             transition: var(--transition);
             margin-right: 5px;
+            text-decoration: none;
         }
         .btn-edit { background-color: #F2F2F7; color: var(--text-dark); }
-        .btn-edit:hover { background-color: var(--primary); }
+        .btn-edit:hover { background-color: var(--primary); color: var(--text-dark);}
         .btn-delete { background-color: #FFF1F1; color: #DC3545; }
         .btn-delete:hover { background-color: #DC3545; color: #fff; }
 
@@ -154,10 +167,11 @@
             border: 1px solid #E5E7EB;
             font-size: 0.9rem;
         }
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.2);
             border-color: var(--primary);
         }
+        textarea.form-control { resize: none; }
     </style>
 </head>
 <body>
@@ -165,7 +179,7 @@
     <aside class="sidebar">
         <div>
             <div class="admin-profile">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" class="admin-avatar">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" class="admin-avatar" alt="Admin">
                 <div class="admin-info">
                     <h6 class="mb-0 fw-bold">Admin Panel</h6>
                     <small class="text-muted">Manajer Produk</small>
@@ -173,7 +187,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="mb-2"><a href="dashboard.html" class="menu-link"><i class="fas fa-th-large"></i> Ringkasan</a></li>
-                <li class="mb-2"><a href="#" class="menu-link active"><i class="fas fa-box"></i> Produk</a></li>
+                <li class="mb-2"><a href="products.php" class="menu-link active"><i class="fas fa-box"></i> Produk</a></li>
                 <li class="mb-2"><a href="#" class="menu-link"><i class="fas fa-shopping-cart"></i> Pesanan</a></li>
                 <li class="mb-2"><a href="#" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
             </ul>
@@ -207,42 +221,108 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php 
+                        // Cek apakah ada data produk
+                        if (mysqli_num_rows($result) > 0) {
+                            // Looping data produk dari database
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                // Penentuan status berdasarkan stok
+                                $status_badge = ($row['stock'] > 0) 
+                                    ? '<span class="status-badge status-available">Tersedia</span>' 
+                                    : '<span class="status-badge status-empty">Habis</span>';
+                                
+                                // Path gambar
+                                $image_path = '../assets/images/products/' . htmlspecialchars($row['image']);
+                        ?>
                         <tr>
-                            <td><img src="https://images.unsplash.com/photo-1621306354894-39908c6fa2cb?q=80&w=200" class="product-img-table"></td>
-                            <td><span class="fw-semibold">Pisang Goreng Madu</span></td>
-                            <td>Kue Basah</td>
-                            <td>Rp 25.000</td>
-                            <td>42</td>
-                            <td><span class="status-badge status-available">Tersedia</span></td>
+                            <td><img src="<?= $image_path ?>" class="product-img-table" alt="Foto Produk" onerror="this.src='https://via.placeholder.com/45?text=No+Img'"></td>
+                            <td><span class="fw-semibold"><?= htmlspecialchars($row['name']) ?></span></td>
+                            <td><?= htmlspecialchars($row['category']) ?></td>
+                            <td>Rp <?= number_format($row['price'], 0, ',', '.') ?></td>
+                            <td><?= htmlspecialchars($row['stock']) ?></td>
+                            <td><?= $status_badge ?></td>
                             <td>
-                                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="fas fa-pen"></i></button>
-                                <button class="btn-action btn-delete"><i class="fas fa-trash"></i></button>
+                                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $row['id'] ?>"><i class="fas fa-pen"></i></button>
+                                <a href="proses_hapus.php?id=<?= $row['id'] ?>" class="btn-action btn-delete" onclick="return confirm('Yakin ingin menghapus produk ini?');"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
+
+                        <div class="modal fade" id="modalEdit<?= $row['id'] ?>" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="fw-bold">Edit Produk</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="proses_edit.php" method="POST" enctype="multipart/form-data">
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                            <input type="hidden" name="gambar_lama" value="<?= $row['image'] ?>">
+
+                                            <div class="mb-3 text-center">
+                                                <img src="<?= $image_path ?>" class="rounded-4 mb-2" style="width:100px; height:100px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/100?text=No+Img'">
+                                                <p class="small text-muted">Foto saat ini</p>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Nama Produk</label>
+                                                <input type="text" class="form-control" name="name" value="<?= htmlspecialchars($row['name']) ?>" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Deskripsi</label>
+                                                <textarea class="form-control" name="description" rows="3" required><?= htmlspecialchars($row['description']) ?></textarea>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">Kategori</label>
+                                                    <select class="form-select" name="category" required>
+                                                        <option value="Original" <?= ($row['category'] == 'Original') ? 'selected' : '' ?>>Original</option>
+                                                        <option value="Pedas" <?= ($row['category'] == 'Pedas') ? 'selected' : '' ?>>Pedas</option>
+                                                        <option value="Manis" <?= ($row['category'] == 'Manis') ? 'selected' : '' ?>>Manis</option>
+                                                        <option value="Gurih" <?= ($row['category'] == 'Gurih') ? 'selected' : '' ?>>Gurih</option>
+                                                        <option value="Paket" <?= ($row['category'] == 'Paket') ? 'selected' : '' ?>>Paket</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">Harga (Rp)</label>
+                                                    <input type="number" class="form-control" name="price" value="<?= $row['price'] ?>" required>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label">Berat (Gram)</label>
+                                                    <input type="number" class="form-control" name="weight" value="<?= $row['weight'] ?>" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Stok</label>
+                                                    <input type="number" class="form-control" name="stock" value="<?= $row['stock'] ?>" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Ganti Foto (Opsional)</label>
+                                                    <input type="file" class="form-control" name="image" accept="image/*">
+                                                    <small class="text-muted" style="font-size:0.75rem;">Biarkan kosong jika tidak ingin mengubah foto</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-dark rounded-3 fw-semibold px-4">Update Produk</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <?php 
+                            } 
+                        } else { 
+                        ?>
                         <tr>
-                            <td><img src="https://images.unsplash.com/photo-1598215439218-f79af39da1ce?q=80&w=200" class="product-img-table"></td>
-                            <td><span class="fw-semibold">Keripik Pisang Ori</span></td>
-                            <td>Cemilan</td>
-                            <td>Rp 15.000</td>
-                            <td>120</td>
-                            <td><span class="status-badge status-available">Tersedia</span></td>
-                            <td>
-                                <button class="btn-action btn-edit"><i class="fas fa-pen"></i></button>
-                                <button class="btn-action btn-delete"><i class="fas fa-trash"></i></button>
-                            </td>
+                            <td colspan="7" class="text-center py-4 text-muted">Belum ada produk yang ditambahkan.</td>
                         </tr>
-                        <tr>
-                            <td><img src="https://images.unsplash.com/photo-1614145121029-83a9f7b68bf4?q=80&w=200" class="product-img-table"></td>
-                            <td><span class="fw-semibold">Bolu Pisang</span></td>
-                            <td>Kue</td>
-                            <td>Rp 45.000</td>
-                            <td>0</td>
-                            <td><span class="status-badge status-empty">Habis</span></td>
-                            <td>
-                                <button class="btn-action btn-edit"><i class="fas fa-pen"></i></button>
-                                <button class="btn-action btn-delete"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -250,84 +330,62 @@
     </main>
 
     <div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="fw-bold">Tambah Produk Baru</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form>
+                <form action="proses_tambah.php" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Nama Produk</label>
-                            <input type="text" class="form-control" placeholder="Masukkan nama produk">
+                            <input type="text" class="form-control" name="name" placeholder="Masukkan nama produk" required>
                         </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi</label>
+                            <textarea class="form-control" name="description" rows="3" placeholder="Deskripsi singkat produk" required></textarea>
+                        </div>
+
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">Kategori</label>
-                                <select class="form-select">
-                                    <option selected>Pilih Kategori</option>
-                                    <option>Cemilan</option>
-                                    <option>Kue Basah</option>
-                                    <option>Olahan Tradisional</option>
+                                <select class="form-select" name="category" required>
+                                    <option value="" selected disabled>Pilih Kategori</option>
+                                    <option value="Original">Original</option>
+                                    <option value="Pedas">Pedas</option>
+                                    <option value="Manis">Manis</option>
+                                    <option value="Gurih">Gurih</option>
+                                    <option value="Paket">Paket</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label">Harga (Rp)</label>
-                                <input type="number" class="form-control" placeholder="25000">
+                                <input type="number" class="form-control" name="price" placeholder="25000" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Berat (Gram)</label>
+                                <input type="number" class="form-control" name="weight" placeholder="250" required>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Stok Awal</label>
-                            <input type="number" class="form-control" placeholder="0">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Foto Produk</label>
-                            <input type="file" class="form-control">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-warning rounded-3 fw-semibold px-4">Simpan Produk</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="fw-bold">Edit Informasi Produk</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3 text-center">
-                            <img src="https://images.unsplash.com/photo-1621306354894-39908c6fa2cb?q=80&w=200" class="rounded-4 mb-2" style="width:100px; height:100px; object-fit:cover;">
-                            <p class="small text-muted">Foto saat ini</p>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Nama Produk</label>
-                            <input type="text" class="form-control" value="Pisang Goreng Madu">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Harga</label>
-                                <input type="number" class="form-control" value="25000">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Stok Awal</label>
+                                <input type="number" class="form-control" name="stock" placeholder="0" required>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Stok</label>
-                                <input type="number" class="form-control" value="42">
+                            <div class="col-md-6">
+                                <label class="form-label">Foto Produk</label>
+                                <input type="file" class="form-control" name="image" accept="image/*" required>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-dark rounded-3 fw-semibold px-4">Update Produk</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-warning rounded-3 fw-semibold px-4">Simpan Produk</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
