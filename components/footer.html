@@ -1,0 +1,183 @@
+<style>
+    /* Menggunakan variabel dari design-system.css */
+    .custom-footer {
+        background-color: var(--color-white);
+        border-top: 1px solid var(--color-border);
+        padding-top: 80px;
+        color: var(--color-text-secondary);
+    }
+
+    .footer-brand {
+        font-family: var(--font-family);
+        font-weight: var(--weight-bold);
+        font-size: var(--text-2xl);
+        color: var(--color-primary-dark);
+        margin-bottom: 20px;
+        display: inline-block;
+        letter-spacing: -0.5px;
+    }
+
+    .footer-desc {
+        font-size: var(--text-sm);
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    .footer-title {
+        font-family: var(--font-family);
+        font-weight: var(--weight-semibold);
+        font-size: var(--text-lg);
+        color: var(--color-text);
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    /* Aksen garis kuning kecil di bawah judul kolom */
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 30px;
+        height: 3px;
+        background-color: var(--color-primary);
+        border-radius: var(--radius-pill);
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 12px;
+    }
+
+    .footer-links a {
+        color: var(--color-text-secondary);
+        font-size: var(--text-sm);
+        transition: color var(--transition-fast), padding-left var(--transition-fast);
+        display: inline-block;
+    }
+
+    .footer-links a:hover {
+        color: var(--color-primary-dark);
+        padding-left: 5px; /* Efek geser kanan sedikit ala Dribbble */
+    }
+
+    .footer-contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 16px;
+        font-size: var(--text-sm);
+    }
+
+    .footer-contact-item i {
+        color: var(--color-primary-dark);
+        font-size: 1.1rem;
+        margin-right: 12px;
+        margin-top: 3px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        font-size: 1.1rem;
+        transition: all var(--transition-normal);
+        border: 1px solid var(--color-border);
+    }
+
+    .social-btn:hover {
+        background-color: var(--color-primary);
+        color: var(--color-text);
+        transform: translateY(-5px);
+        border-color: var(--color-primary);
+        box-shadow: 0 5px 15px rgba(255, 214, 0, 0.3);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid var(--color-border);
+        padding: 24px 0;
+        margin-top: 60px;
+        text-align: center;
+        font-size: var(--text-xs);
+    }
+
+    .footer-bottom p {
+        margin: 0;
+    }
+</style>
+
+<footer class="custom-footer">
+    <div class="container">
+        <div class="row gy-5">
+            <div class="col-lg-4 col-md-6 pe-lg-5">
+                <a href="index.html" class="footer-brand">PisangKraf</a>
+                <p class="footer-desc">
+                    Menghadirkan inovasi olahan pisang nusantara dengan kualitas premium dan gaya modern. Dibuat dengan bahan lokal terbaik untuk menemani setiap momen spesial Anda.
+                </p>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <h5 class="footer-title">Jelajahi</h5>
+                <ul class="footer-links">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="products.html">Semua Produk</a></li>
+                    <li><a href="about.html">Tentang Kami</a></li>
+                    <li><a href="contact.html">Hubungi Kami</a></li>
+                    <li><a href="#">Blog & Resep</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Kontak</h5>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Purwokerto, Jawa Tengah<br>Indonesia</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>hello@pisangkraf.com</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+62 812 3456 7890</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <h5 class="footer-title">Ikuti Kami</h5>
+                <p class="footer-desc" style="margin-bottom: 15px;">Dapatkan update promo dan produk terbaru dari kami.</p>
+                <div class="social-icons">
+                    <a href="#" class="social-btn" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-btn" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="social-btn" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p>&copy; 2026 PisangKraf UMKM Artisanal Banana Delights. All rights reserved.</p>
+        </div>
+    </div>
+</footer>

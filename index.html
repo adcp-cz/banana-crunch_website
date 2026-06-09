@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PisangKraf | Artisanal Banana Delights</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- DESIGN SYSTEM & VARIABLES --- */
+        :root {
+            --primary: #FFD600;
+            --secondary: #8A6F00;
+            --bg-light: #FAFAFA;
+            --card-bg: #FFFFFF;
+            --text-dark: #1F1F1F;
+            --text-muted: #6c757d;
+            --radius-card: 20px;
+            --radius-btn: 30px;
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; }
+
+        /* --- NAVBAR --- */
+        .navbar-custom {
+            padding: 20px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
+        .navbar-custom.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            padding: 15px 0;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--secondary) !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark) !important;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+        .nav-link:hover { color: var(--secondary) !important; }
+        .nav-icons a {
+            color: var(--text-dark);
+            margin-left: 20px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .nav-icons a:hover { color: var(--secondary); }
+        .cart-badge {
+            background-color: var(--secondary);
+            font-size: 0.6rem;
+            transform: translate(-10px, -10px);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background-image: url('https://images.unsplash.com/photo-1603833665858-e61d17a86224?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center right;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, rgba(250,250,250,1) 0%, rgba(250,250,250,0.9) 45%, rgba(250,250,250,0) 100%);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding-top: 80px;
+        }
+        .badge-artisanal {
+            background-color: rgba(255, 214, 0, 0.2);
+            color: var(--secondary);
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-btn);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+        
+        /* --- BUTTONS --- */
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: var(--radius-btn);
+            border: none;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 214, 0, 0.3);
+            display: inline-block;
+        }
+        .btn-primary-custom:hover {
+            background-color: var(--secondary);
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(138, 111, 0, 0.3);
+        }
+        .btn-outline-custom {
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: var(--radius-btn);
+            background: transparent;
+            transition: var(--transition);
+            display: inline-block;
+            text-align: center;
+        }
+        .btn-outline-custom:hover {
+            background-color: var(--text-dark);
+            color: #fff;
+        }
+
+        /* --- CARDS & COMPONENTS --- */
+        .premium-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-card);
+            border: none;
+            padding: 30px;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            height: 100%;
+        }
+        .premium-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Why Us Section */
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+        .icon-box.yellow { background-color: rgba(255, 214, 0, 0.15); color: var(--secondary); }
+        .icon-box.green { background-color: rgba(40, 167, 69, 0.1); color: #28a745; }
+        .icon-box.blue { background-color: rgba(23, 162, 184, 0.1); color: #17a2b8; }
+
+        /* Products Section */
+        .product-card { padding: 15px; }
+        .product-img-wrapper {
+            position: relative;
+            border-radius: calc(var(--radius-card) - 5px);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .premium-card:hover .product-img { transform: scale(1.05); }
+        .price-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--card-bg);
+            padding: 6px 15px;
+            border-radius: var(--radius-btn);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 2;
+            color: var(--secondary);
+        }
+
+        /* Testimonial Section */
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-right: 15px;
+        }
+        .quote-icon {
+            color: rgba(0,0,0,0.05);
+            font-size: 2rem;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background-color: var(--primary);
+            padding: 80px 0;
+        }
+        .newsletter-form {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: var(--radius-btn);
+            padding: 5px;
+            display: flex;
+            box-shadow: var(--shadow-soft);
+        }
+        .newsletter-input {
+            border: none;
+            padding: 15px 25px;
+            border-radius: var(--radius-btn);
+            flex-grow: 1;
+            outline: none;
+        }
+        .newsletter-btn {
+            background-color: var(--secondary);
+            color: #fff;
+            border: none;
+            padding: 0 30px;
+            border-radius: var(--radius-btn);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .newsletter-btn:hover { background-color: var(--text-dark); }
+
+        /* Footer */
+        footer {
+            background-color: #EFEFEF;
+            padding: 60px 0 30px;
+        }
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+        .footer-links a:hover { color: var(--secondary); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#">PisangKraf</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+                <div class="nav-icons d-flex align-items-center mt-3 mt-lg-0">
+                    <a href="#"><i class="fas fa-search"></i></a>
+                    <a href="#"><i class="far fa-user"></i></a>
+                    <a href="#" class="position-relative">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">1</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-7 col-md-9" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="badge-artisanal">Artisanal Banana Delights</div>
+                    <h1 class="hero-title">Cita Rasa Pisang Tradisional,<br>Gaya Modern.</h1>
+                    <p class="hero-desc">PisangKraf menghadirkan berbagai olahan pisang berkualitas premium dengan cita rasa khas Indonesia.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#" class="btn-primary-custom">Belanja Sekarang</a>
+                        <a href="#produk" class="btn-outline-custom px-4 py-2">Lihat Produk</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-5 mt-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Kenapa Kami?</h2>
+                <p class="text-muted">Kami berkomitmen memberikan kualitas terbaik, dari kebun hingga ke meja Anda.</p>
+            </div>
+            <div class="row g-4 text-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="premium-card">
+                        <div class="icon-box yellow"><i class="fas fa-leaf"></i></div>
+                        <h4 class="fw-bold fs-5">Bahan Segar</h4>
+                        <p class="text-muted fs-6 mb-0">Pisang dipanen langsung dari petani lokal setiap pagi untuk menjamin kesegaran maksimal.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="premium-card">
+                        <div class="icon-box green"><i class="fas fa-heart"></i></div>
+                        <h4 class="fw-bold fs-5">Produk Lokal</h4>
+                        <p class="text-muted fs-6 mb-0">100% mendukung UMKM dan petani lokal Indonesia. Dari kita, untuk kita.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="premium-card">
+                        <div class="icon-box blue"><i class="fas fa-shield-alt"></i></div>
+                        <h4 class="fw-bold fs-5">Tanpa Pengawet</h4>
+                        <p class="text-muted fs-6 mb-0">Alami dan sehat. Kami tidak menggunakan bahan pengawet buatan dalam setiap produk.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="produk" class="py-5 bg-light">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-up">
+                <div>
+                    <h2 class="fw-bold mb-1">Produk Terpopuler</h2>
+                    <p class="text-muted mb-0">Pilihan favorit pelanggan kami.</p>
+                </div>
+                <a href="#" class="text-dark fw-medium">Lihat Semua <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="premium-card product-card d-flex flex-column">
+                        <div class="product-img-wrapper">
+                            <span class="price-badge">Rp 25.000</span>
+                            <img src="https://images.unsplash.com/photo-1621306354894-39908c6fa2cb?q=80&w=400&auto=format&fit=crop" alt="Pisang Goreng Madu" class="product-img">
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-3">Pisang Goreng Madu</h4>
+                        <button class="btn-outline-custom w-100 mt-auto">Detail Produk</button>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="premium-card product-card d-flex flex-column">
+                        <div class="product-img-wrapper">
+                            <span class="price-badge">Rp 15.000</span>
+                            <img src="https://images.unsplash.com/photo-1598215439218-f79af39da1ce?q=80&w=400&auto=format&fit=crop" alt="Keripik Pisang Gurih" class="product-img">
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-3">Keripik Pisang Gurih</h4>
+                        <button class="btn-outline-custom w-100 mt-auto">Detail Produk</button>
+                    </div>
+                </div>
+                
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="premium-card product-card d-flex flex-column">
+                        <div class="product-img-wrapper">
+                            <span class="price-badge">Rp 45.000</span>
+                            <img src="https://images.unsplash.com/photo-1614145121029-83a9f7b68bf4?q=80&w=400&auto=format&fit=crop" alt="Bolu Pisang Klasik" class="product-img">
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-3">Bolu Pisang Klasik</h4>
+                        <button class="btn-outline-custom w-100 mt-auto">Detail Produk</button>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="premium-card product-card d-flex flex-column">
+                        <div class="product-img-wrapper">
+                            <span class="price-badge">Rp 30.000</span>
+                            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop" alt="Pisang Nugget Coklat" class="product-img">
+                        </div>
+                        <h4 class="fw-bold fs-5 mb-3">Pisang Nugget Coklat</h4>
+                        <button class="btn-outline-custom w-100 mt-auto">Detail Produk</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Kata Mereka</h2>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="premium-card position-relative">
+                        <i class="fas fa-quote-right quote-icon"></i>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="testimonial-avatar">SR</div>
+                            <div>
+                                <h5 class="fw-bold mb-0 fs-6">Siti Rahma</h5>
+                                <span class="text-muted" style="font-size: 0.8rem;">Pelanggan Setia</span>
+                            </div>
+                        </div>
+                        <p class="text-muted fst-italic mb-0">"Bolu pisangnya beneran lembut banget dan manisnya pas! Selalu jadi andalan buat acara keluarga."</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="premium-card position-relative">
+                        <i class="fas fa-quote-right quote-icon"></i>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="testimonial-avatar">BS</div>
+                            <div>
+                                <h5 class="fw-bold mb-0 fs-6">Budi Santoso</h5>
+                                <span class="text-muted" style="font-size: 0.8rem;">Pecinta Cemilan</span>
+                            </div>
+                        </div>
+                        <p class="text-muted fst-italic mb-0">"Pisang goreng madunya juara! Renyah di luar dan karamel madunya itu lho, bikin nagih. Packagingnya rapi."</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="premium-card position-relative">
+                        <i class="fas fa-quote-right quote-icon"></i>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="testimonial-avatar">AW</div>
+                            <div>
+                                <h5 class="fw-bold mb-0 fs-6">Ayu Wandira</h5>
+                                <span class="text-muted" style="font-size: 0.8rem;">Ibu Rumah Tangga</span>
+                            </div>
+                        </div>
+                        <p class="text-muted fst-italic mb-0">"Anak-anak suka banget sama Pisang Nuggetnya. Bahannya kerasa premium dan nggak pake pengawet sama sekali."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter-section text-center" data-aos="zoom-in">
+        <div class="container">
+            <h2 class="fw-bold mb-3">Dapatkan Promo Menarik!</h2>
+            <p class="mb-4">Daftar buletin kami untuk info produk terbaru dan diskon khusus.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Masukkan email Anda" required>
+                <button type="submit" class="newsletter-btn">Daftar</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="footer-logo">PisangKraf</div>
+                    <p class="text-muted fs-6 pe-md-5">Menghadirkan kelezatan olahan pisang nusantara dengan sentuhan modern dan kualitas premium.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="#" class="text-muted fs-5"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-muted fs-5"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-muted fs-5"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 footer-links">
+                    <h6 class="fw-bold mb-3">Tautan</h6>
+                    <a href="#">Home</a>
+                    <a href="#">Products</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="col-md-3 footer-links">
+                    <h6 class="fw-bold mb-3">Bantuan</h6>
+                    <a href="#">Cara Pesan</a>
+                    <a href="#">Kebijakan Pengiriman</a>
+                    <a href="#">Syarat & Ketentuan</a>
+                    <a href="#">Kebijakan Privasi</a>
+                </div>
+            </div>
+            <hr class="mt-5 mb-3" style="border-color: #ddd;">
+            <div class="text-center text-muted" style="font-size: 0.85rem;">
+                &copy; 2026 PisangKraf UMKM Artisanal Banana Delights. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Inisialisasi AOS
+        AOS.init({
+            once: true,
+            offset: 50,
+        });
+
+        // Efek Navbar Scrolled
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
