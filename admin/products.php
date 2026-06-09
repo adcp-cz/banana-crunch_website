@@ -1,11 +1,19 @@
 <?php
 session_start();
-// Pastikan file koneksi sudah dibuat sesuai instruksi sebelumnya
+// Pastikan file koneksi sudah benar
 require '../database/koneksi.php';
 
 // Ambil semua data produk dari database, urutkan dari yang terbaru
 $query = "SELECT * FROM products ORDER BY id DESC";
 $result = mysqli_query($koneksi, $query);
+
+// TAMPUNG DATA KE DALAM ARRAY AGAR BISA DILOOPING 2 KALI (Tabel & Modal)
+$products = [];
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $products[] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -192,7 +200,7 @@ $result = mysqli_query($koneksi, $query);
                 <li class="mb-2"><a href="#" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
             </ul>
         </div>
-        <a href="../login.html" class="menu-link text-danger mt-auto"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+        <a href="../login.php" class="menu-link text-danger mt-auto"><i class="fas fa-sign-out-alt"></i> Keluar</a>
     </aside>
 
     <main class="main-content">
@@ -221,108 +229,33 @@ $result = mysqli_query($koneksi, $query);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        // Cek apakah ada data produk
-                        if (mysqli_num_rows($result) > 0) {
-                            // Looping data produk dari database
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                // Penentuan status berdasarkan stok
-                                $status_badge = ($row['stock'] > 0) 
-                                    ? '<span class="status-badge status-available">Tersedia</span>' 
-                                    : '<span class="status-badge status-empty">Habis</span>';
-                                
-                                // Path gambar
-                                $image_path = '../assets/images/products/' . htmlspecialchars($row['image']);
-                        ?>
-                        <tr>
-                            <td><img src="<?= $image_path ?>" class="product-img-table" alt="Foto Produk" onerror="this.src='https://via.placeholder.com/45?text=No+Img'"></td>
-                            <td><span class="fw-semibold"><?= htmlspecialchars($row['name']) ?></span></td>
-                            <td><?= htmlspecialchars($row['category']) ?></td>
-                            <td>Rp <?= number_format($row['price'], 0, ',', '.') ?></td>
-                            <td><?= htmlspecialchars($row['stock']) ?></td>
-                            <td><?= $status_badge ?></td>
-                            <td>
-                                <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $row['id'] ?>"><i class="fas fa-pen"></i></button>
-                                <a href="proses_hapus.php?id=<?= $row['id'] ?>" class="btn-action btn-delete" onclick="return confirm('Yakin ingin menghapus produk ini?');"><i class="fas fa-trash"></i></a>
-                            </td>
-                        </tr>
-
-                        <div class="modal fade" id="modalEdit<?= $row['id'] ?>" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="fw-bold">Edit Produk</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form action="proses_edit.php" method="POST" enctype="multipart/form-data">
-                                        <div class="modal-body">
-                                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                            <input type="hidden" name="gambar_lama" value="<?= $row['image'] ?>">
-
-                                            <div class="mb-3 text-center">
-                                                <img src="<?= $image_path ?>" class="rounded-4 mb-2" style="width:100px; height:100px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/100?text=No+Img'">
-                                                <p class="small text-muted">Foto saat ini</p>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Nama Produk</label>
-                                                <input type="text" class="form-control" name="name" value="<?= htmlspecialchars($row['name']) ?>" required>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Deskripsi</label>
-                                                <textarea class="form-control" name="description" rows="3" required><?= htmlspecialchars($row['description']) ?></textarea>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Kategori</label>
-                                                    <select class="form-select" name="category" required>
-                                                        <option value="Original" <?= ($row['category'] == 'Original') ? 'selected' : '' ?>>Original</option>
-                                                        <option value="Pedas" <?= ($row['category'] == 'Pedas') ? 'selected' : '' ?>>Pedas</option>
-                                                        <option value="Manis" <?= ($row['category'] == 'Manis') ? 'selected' : '' ?>>Manis</option>
-                                                        <option value="Gurih" <?= ($row['category'] == 'Gurih') ? 'selected' : '' ?>>Gurih</option>
-                                                        <option value="Paket" <?= ($row['category'] == 'Paket') ? 'selected' : '' ?>>Paket</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Harga (Rp)</label>
-                                                    <input type="number" class="form-control" name="price" value="<?= $row['price'] ?>" required>
-                                                </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label class="form-label">Berat (Gram)</label>
-                                                    <input type="number" class="form-control" name="weight" value="<?= $row['weight'] ?>" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Stok</label>
-                                                    <input type="number" class="form-control" name="stock" value="<?= $row['stock'] ?>" required>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">Ganti Foto (Opsional)</label>
-                                                    <input type="file" class="form-control" name="image" accept="image/*">
-                                                    <small class="text-muted" style="font-size:0.75rem;">Biarkan kosong jika tidak ingin mengubah foto</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-dark rounded-3 fw-semibold px-4">Update Produk</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <?php 
-                            } 
-                        } else { 
-                        ?>
-                        <tr>
-                            <td colspan="7" class="text-center py-4 text-muted">Belum ada produk yang ditambahkan.</td>
-                        </tr>
-                        <?php } ?>
+                        <?php if (count($products) > 0): ?>
+                            <?php foreach ($products as $row): ?>
+                                <?php 
+                                    $status_badge = ($row['stock'] > 0) 
+                                        ? '<span class="status-badge status-available">Tersedia</span>' 
+                                        : '<span class="status-badge status-empty">Habis</span>';
+                                    
+                                    $image_path = '../assets/images/products/' . htmlspecialchars($row['image']);
+                                ?>
+                                <tr>
+                                    <td><img src="<?= $image_path ?>" class="product-img-table" alt="Foto Produk" onerror="this.onerror=null; this.src='https://via.placeholder.com/45?text=No+Img'"></td>
+                                    <td><span class="fw-semibold"><?= htmlspecialchars($row['name']) ?></span></td>
+                                    <td><?= htmlspecialchars($row['category']) ?></td>
+                                    <td>Rp <?= number_format($row['price'], 0, ',', '.') ?></td>
+                                    <td><?= htmlspecialchars($row['stock']) ?></td>
+                                    <td><?= $status_badge ?></td>
+                                    <td>
+                                        <button class="btn-action btn-edit" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $row['id'] ?>"><i class="fas fa-pen"></i></button>
+                                        <a href="proses_hapus.php?id=<?= $row['id'] ?>" class="btn-action btn-delete" onclick="return confirm('Yakin ingin menghapus produk ini?');"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="7" class="text-center py-4 text-muted">Belum ada produk yang ditambahkan.</td>
+                            </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -389,6 +322,78 @@ $result = mysqli_query($koneksi, $query);
             </div>
         </div>
     </div>
+
+    <?php foreach ($products as $row): ?>
+        <?php $image_path = '../assets/images/products/' . htmlspecialchars($row['image']); ?>
+        <div class="modal fade" id="modalEdit<?= $row['id'] ?>" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="fw-bold">Edit Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="proses_edit.php" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                            <input type="hidden" name="gambar_lama" value="<?= $row['image'] ?>">
+
+                            <div class="mb-3 text-center">
+                                <img src="<?= $image_path ?>" class="rounded-4 mb-2" style="width:100px; height:100px; object-fit:cover;" onerror="this.onerror=null; this.src='https://via.placeholder.com/100?text=No+Img'">
+                                <p class="small text-muted">Foto saat ini</p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Nama Produk</label>
+                                <input type="text" class="form-control" name="name" value="<?= htmlspecialchars($row['name']) ?>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Deskripsi</label>
+                                <textarea class="form-control" name="description" rows="3" required><?= htmlspecialchars($row['description']) ?></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Kategori</label>
+                                    <select class="form-select" name="category" required>
+                                        <option value="Original" <?= ($row['category'] == 'Original') ? 'selected' : '' ?>>Original</option>
+                                        <option value="Pedas" <?= ($row['category'] == 'Pedas') ? 'selected' : '' ?>>Pedas</option>
+                                        <option value="Manis" <?= ($row['category'] == 'Manis') ? 'selected' : '' ?>>Manis</option>
+                                        <option value="Gurih" <?= ($row['category'] == 'Gurih') ? 'selected' : '' ?>>Gurih</option>
+                                        <option value="Paket" <?= ($row['category'] == 'Paket') ? 'selected' : '' ?>>Paket</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Harga (Rp)</label>
+                                    <input type="number" class="form-control" name="price" value="<?= $row['price'] ?>" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Berat (Gram)</label>
+                                    <input type="number" class="form-control" name="weight" value="<?= $row['weight'] ?>" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Stok</label>
+                                    <input type="number" class="form-control" name="stock" value="<?= $row['stock'] ?>" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Ganti Foto (Opsional)</label>
+                                    <input type="file" class="form-control" name="image" accept="image/*">
+                                    <small class="text-muted" style="font-size:0.75rem;">Biarkan kosong jika tidak ingin mengubah foto</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-dark rounded-3 fw-semibold px-4">Update Produk</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

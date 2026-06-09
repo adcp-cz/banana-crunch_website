@@ -1,3 +1,13 @@
+<?php
+session_start();
+// Hubungkan ke database koneksi.php
+require 'database/koneksi.php';
+
+// Ambil semua produk yang berstatus aktif (is_active = 1)
+$query = "SELECT * FROM products WHERE is_active = 1 ORDER BY id DESC";
+$result = mysqli_query($koneksi, $query);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -286,21 +296,21 @@
 
     <nav class="navbar navbar-expand-lg fixed-top navbar-custom" id="navbar">
         <div class="container">
-            <a class="navbar-brand" href="index.html">PisangKraf</a>
+            <a class="navbar-brand" href="index.php">PisangKraf</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.php">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
                 </ul>
                 <div class="nav-icons d-flex align-items-center mt-3 mt-lg-0">
                     <a href="#"><i class="fas fa-search"></i></a>
                     <a href="login.php"><i class="far fa-user"></i></a>
-                    <a href="#" class="position-relative">
+                    <a href="chart.php" class="position-relative">
                         <i class="fas fa-shopping-cart"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge">1</span>
                     </a>
@@ -318,8 +328,8 @@
                     <h1 class="hero-title">Cita Rasa Pisang Tradisional,<br>Gaya Modern.</h1>
                     <p class="hero-desc">PisangKraf menghadirkan berbagai olahan pisang berkualitas premium dengan cita rasa khas Indonesia.</p>
                     <div class="d-flex flex-wrap gap-3">
-                        <a href="products.html" class="btn-primary-custom">Belanja Sekarang</a>
-                        <a href="product-detail.html" class="btn-outline-custom px-4 py-2">Lihat Produk</a>
+                        <a href="products.php" class="btn-primary-custom">Belanja Sekarang</a>
+                        <a href="#produk" class="btn-outline-custom px-4 py-2">Lihat Produk</a>
                     </div>
                 </div>
             </div>
@@ -363,55 +373,39 @@
             <div class="d-flex justify-content-between align-items-end mb-4" data-aos="fade-up">
                 <div>
                     <h2 class="fw-bold mb-1">Produk Terpopuler</h2>
-                    <p class="text-muted mb-0">Pilihan favorit pelanggan kami.</p>
+                    <p class="text-muted mb-0">Pilihan favorit pelanggan kami langsung dari kebun.</p>
                 </div>
-                <a href="products.html" class="text-dark fw-medium">Lihat Semua <i class="fas fa-arrow-right ms-1"></i></a>
+                <a href="products.php" class="text-dark fw-medium">Lihat Semua <i class="fas fa-arrow-right ms-1"></i></a>
             </div>
             
             <div class="row g-4">
-                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <?php 
+                // Cek ketersediaan produk di database
+                if (mysqli_num_rows($result) > 0) {
+                    $delay = 100; // Efek delay AOS dinamis
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        // Menyesuaikan jalur gambar produk dengan folder admin upload
+                        $image_path = 'assets/images/products/' . htmlspecialchars($row['image']);
+                ?>
+                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?= $delay ?>">
                     <div class="premium-card product-card d-flex flex-column">
                         <div class="product-img-wrapper">
-                            <span class="price-badge">Rp 25.000</span>
-                            <img src="https://i.pinimg.com/736x/2e/59/8e/2e598e928eed7b5afd625d4bac6020a5.jpg" alt="Pisang Goreng Madu" class="product-img">
+                            <span class="price-badge">Rp <?= number_format($row['price'], 0, ',', '.') ?></span>
+                            <img src="<?= $image_path ?>" alt="<?= htmlspecialchars($row['name']) ?>" class="product-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=No+Image'">
                         </div>
-                        <h4 class="fw-bold fs-5 mb-3">Pisang Goreng Madu</h4>
-                        <a href="product-detail.html" class="btn-outline-custom w-100 mt-auto text-center" style="display: block;">Detail Produk</a>
+                        <h4 class="fw-bold fs-5 mb-3"><?= htmlspecialchars($row['name']) ?></h4>
+                        <a href="product-detail.php?id=<?= $row['id'] ?>" class="btn-outline-custom w-100 mt-auto text-center" style="display: block;">Detail Produk</a>
                     </div>
                 </div>
-                
-                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="premium-card product-card d-flex flex-column">
-                        <div class="product-img-wrapper">
-                            <span class="price-badge">Rp 15.000</span>
-                            <img src="https://i.pinimg.com/1200x/3f/b0/1e/3fb01e2f9e0af0a6d9b7a1685fce342b.jpg" alt="Keripik Pisang Gurih" class="product-img">
-                        </div>
-                        <h4 class="fw-bold fs-5 mb-3">Keripik Pisang Gurih</h4>
-                        <a href="product-detail.html" class="btn-outline-custom w-100 mt-auto text-center" style="display: block;">Detail Produk</a>
-                    </div>
+                <?php 
+                        $delay += 100; 
+                    }
+                } else { 
+                ?>
+                <div class="col-12 text-center py-5">
+                    <div class="text-muted fs-5"><i class="fas fa-box-open me-2"></i> Belum ada produk aktif di dalam database MySQL.</div>
                 </div>
-                
-                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="premium-card product-card d-flex flex-column">
-                        <div class="product-img-wrapper">
-                            <span class="price-badge">Rp 45.000</span>
-                            <img src="https://images.unsplash.com/photo-1614145121029-83a9f7b68bf4?q=80&w=400&auto=format&fit=crop" alt="Bolu Pisang Klasik" class="product-img">
-                        </div>
-                        <h4 class="fw-bold fs-5 mb-3">Bolu Pisang Klasik</h4>
-                        <a href="product-detail.html" class="btn-outline-custom w-100 mt-auto text-center" style="display: block;">Detail Produk</a>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="premium-card product-card d-flex flex-column">
-                        <div class="product-img-wrapper">
-                            <span class="price-badge">Rp 30.000</span>
-                            <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop" alt="Pisang Nugget Coklat" class="product-img">
-                        </div>
-                        <h4 class="fw-bold fs-5 mb-3">Pisang Nugget Coklat</h4>
-                        <a href="product-detail.html" class="btn-outline-custom w-100 mt-auto text-center" style="display: block;">Detail Produk</a>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </section>
@@ -493,10 +487,10 @@
                 </div>
                 <div class="col-md-2 footer-links">
                     <h6 class="fw-bold mb-3">Tautan</h6>
-                    <a href="index.html">Home</a>
-                    <a href="products.html">Products</a>
-                    <a href="about.html">About Us</a>
-                    <a href="contact.html">Contact</a>
+                    <a href="index.php">Home</a>
+                    <a href="products.php">Products</a>
+                    <a href="about.php">About Us</a>
+                    <a href="contact.php">Contact</a>
                 </div>
                 <div class="col-md-3 footer-links">
                     <h6 class="fw-bold mb-3">Bantuan</h6>
@@ -514,17 +508,14 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        // Inisialisasi AOS
         AOS.init({
             once: true,
             offset: 50,
         });
 
-        // Efek Navbar Scrolled
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {

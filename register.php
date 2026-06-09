@@ -238,46 +238,46 @@
                         <p class="welcome-subtitle">Bergabunglah dengan kami dan nikmati kemudahan berbelanja produk olahan pisang premium.</p>
                     </div>
 
-                    <form action="login.html" method="POST" autocomplete="off">
-                        
-                        <div class="input-group-custom">
-                            <label for="fullname" class="form-label-custom">Nama Lengkap</label>
-                            <input type="text" id="fullname" class="form-control-custom" placeholder="Masukkan nama lengkap Anda" required>
-                        </div>
+                    <form action="proses_register.php" method="POST" autocomplete="off">
+    
+    <div class="input-group-custom">
+        <label for="fullname" class="form-label-custom">Nama Lengkap</label>
+        <input type="text" id="fullname" name="name" class="form-control-custom" placeholder="Masukkan nama lengkap Anda" required>
+    </div>
 
-                        <div class="input-group-custom">
-                            <label for="email" class="form-label-custom">Alamat Email</label>
-                            <input type="email" id="email" class="form-control-custom" placeholder="contoh@email.com" required>
-                        </div>
+    <div class="input-group-custom">
+        <label for="email" class="form-label-custom">Alamat Email</label>
+        <input type="email" id="email" name="email" class="form-control-custom" placeholder="contoh@email.com" required>
+    </div>
 
-                        <div class="input-group-custom">
-                            <label for="phone" class="form-label-custom">Nomor Telepon</label>
-                            <input type="tel" id="phone" class="form-control-custom" placeholder="081234567890" required>
-                        </div>
+    <div class="input-group-custom">
+        <label for="phone" class="form-label-custom">Nomor Telepon</label>
+        <input type="tel" id="phone" name="phone" class="form-control-custom" placeholder="081234567890" required>
+    </div>
 
-                        <div class="input-group-custom">
-                            <label for="password" class="form-label-custom">Kata Sandi</label>
-                            <div class="password-field-wrapper">
-                                <input type="password" id="password" class="form-control-custom" placeholder="Buat kata sandi Anda" required>
-                                <i class="far fa-eye password-toggle-icon" id="togglePassword"></i>
-                            </div>
-                        </div>
+    <div class="input-group-custom">
+        <label for="password" class="form-label-custom">Kata Sandi</label>
+        <div class="password-field-wrapper">
+            <input type="password" id="password" name="password" class="form-control-custom" placeholder="Buat kata sandi Anda" required>
+            <i class="far fa-eye password-toggle-icon" id="togglePassword"></i>
+        </div>
+    </div>
 
-                        <div class="input-group-custom">
-                            <label for="confirmPassword" class="form-label-custom">Konfirmasi Kata Sandi</label>
-                            <div class="password-field-wrapper">
-                                <input type="password" id="confirmPassword" class="form-control-custom" placeholder="Ulangi kata sandi Anda" required>
-                                <i class="far fa-eye password-toggle-icon" id="toggleConfirmPassword"></i>
-                            </div>
-                        </div>
+    <div class="input-group-custom">
+        <label for="confirmPassword" class="form-label-custom">Konfirmasi Kata Sandi</label>
+        <div class="password-field-wrapper">
+            <input type="password" id="confirmPassword" name="confirm_password" class="form-control-custom" placeholder="Ulangi kata sandi Anda" required>
+            <i class="far fa-eye password-toggle-icon" id="toggleConfirmPassword"></i>
+        </div>
+    </div>
 
-                        <button type="submit" class="btn-login-submit">Daftar</button>
+    <button type="submit" class="btn-login-submit">Daftar</button>
 
-                    </form>
+</form>
 
                     <div class="form-redirect-footer">
                         <span>Sudah punya akun?</span>
-                        <a href="login.html" class="link-register-redirect">Masuk</a>
+                        <a href="login.php" class="link-register-redirect">Masuk</a>
                     </div>
 
                 </div>

@@ -1,56 +1,66 @@
 <?php
 session_start();
-// Arahkan require ke file koneksi.php yang benar
+// Hubungkan ke database
 require '../database/koneksi.php'; 
 
-// Cek apakah ada request POST dari form
+// Pastikan form dikirim melalui metode POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
-    // Tangkap data dari form
-    $name = mysqli_real_escape_string($koneksi, $_POST['name']);
+    // 1. Tangkap semua input dari form dan bersihkan dari karakter berbahaya
+    $name        = mysqli_real_escape_string($koneksi, $_POST['name']);
     $description = mysqli_real_escape_string($koneksi, $_POST['description']);
-    $category = mysqli_real_escape_string($koneksi, $_POST['category']);
-    $price = $_POST['price'];
-    $weight = $_POST['weight'];
-    $stock = $_POST['stock'];
+    $category    = mysqli_real_escape_string($koneksi, $_POST['category']);
+    $price       = (float) $_POST['price'];
+    $weight      = (int) $_POST['weight'];
+    $stock       = (int) $_POST['stock'];
     
-    // Buat slug (URL Friendly) dari nama produk (contoh: Keripik Manis -> keripik-manis)
+    // 2. Buat URL-friendly slug otomatis dari nama produk (Misal: "Pisang Manis" jadi "pisang-manis")
     $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $name)));
     
-    // Ambil ID Admin yang sedang login (Sebagai contoh kita pakai angka 1 untuk admin default)
-    // Nanti jika fitur login sudah jalan, ganti jadi: $created_by = $_SESSION['user_id'];
-    $created_by = 1; 
+    // 3. Ambil ID Admin yang sedang login (Atau gunakan angka 1 sebagai default jika session belum sempurna)
+    $created_by = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1; 
 
-    // --- PROSES UPLOAD GAMBAR ---
-    $image_name = "no-image.png"; // Default jika gagal
+    // 4. Proses Upload Foto Produk
+    $image_name = "no-image.png"; // Nama gambar default jika admin tidak mengunggah foto
     
-    if(isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $img_tmp = $_FILES['image']['tmp_name'];
-        // Generate nama unik agar file tidak tertimpa
-        $image_name = time() . '_' . $_FILES['image']['name']; 
+        // Beri nama unik menggunakan waktu saat ini agar nama file tidak bentrok
+        $image_name = time() . '_' . basename($_FILES['image']['name']); 
         
-        // Tentukan folder tujuan (Pastikan folder assets/images/products/ ini ada di komputermu!)
+        // Tentukan folder tujuan penyimpanan gambar
         $target_dir = "../assets/images/products/";
         
-        // Pindahkan file dari memori sementara ke folder tujuan
+        // Buat foldernya otomatis jika belum ada di komputermu
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+        
+        // Pindahkan file gambar dari penyimpanan sementara ke folder tujuan
         move_uploaded_file($img_tmp, $target_dir . $image_name);
     }
 
-    // --- PROSES INSERT KE DATABASE ---
+    // 5. Query untuk memasukkan data ke tabel `products`
     $query = "INSERT INTO products 
               (name, slug, description, price, stock, weight, image, category, is_active, created_by) 
               VALUES 
-              ('$name', '$slug', '$description', '$price', '$stock', '$weight', '$image_name', '$category', 1, '$created_by')";
+              ('$name', '$slug', '$description', $price, $stock, $weight, '$image_name', '$category', 1, $created_by)";
 
+    // 6. Eksekusi query dan berikan notifikasi
     if (mysqli_query($koneksi, $query)) {
-        // Jika sukses, munculkan alert dan kembali ke halaman produk
         echo "<script>
-                alert('Produk berhasil ditambahkan!');
+                alert('Berhasil! Produk baru telah ditambahkan ke katalog.');
                 window.location.href='products.php';
               </script>";
     } else {
-        // Jika gagal
-        echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
+        echo "<script>
+                alert('Gagal menambahkan produk: " . mysqli_error($koneksi) . "');
+                window.location.href='products.php';
+              </script>";
     }
+} else {
+    // Jika file diakses langsung tanpa lewat form
+    header("Location: products.php");
+    exit();
 }
 ?>
