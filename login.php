@@ -274,17 +274,17 @@
                         <p class="welcome-subtitle">Silakan masukkan email dan kata sandi Anda untuk melanjutkan belanja.</p>
                     </div>
 
-                    <form action="user/dashboard.html" method="POST" autocomplete="off">
-                        
+                    <form action="proses_login.php" method="POST" autocomplete="off">
+    
                         <div class="input-group-custom">
                             <label for="email" class="form-label-custom">Alamat Email</label>
-                            <input type="email" id="email" class="form-control-custom" placeholder="contoh@email.com" required>
+                            <input type="email" id="email" name="email" class="form-control-custom" placeholder="contoh@email.com" required>
                         </div>
 
                         <div class="input-group-custom">
                             <label for="password" class="form-label-custom">Kata Sandi</label>
-                            <div class="password-field-wrapper">
-                                <input type="password" id="password" class="form-control-custom" placeholder="Masukkan kata sandi Anda" required>
+                                <div class="password-field-wrapper">
+                                    <input type="password" id="password" name="password" class="form-control-custom" placeholder="Masukkan kata sandi Anda" required>
                                 <i class="far fa-eye password-toggle-icon" id="togglePassword"></i>
                             </div>
                         </div>
@@ -292,15 +292,15 @@
                         <div class="form-options-row">
                             <div class="form-check d-flex align-items-center gap-2 p-0 m-0">
                                 <input type="checkbox" id="rememberMe" class="form-check-input form-check-input-custom m-0">
-                                <label for="rememberMe" class="checkbox-custom-label">Ingat Saya</label>
-                            </div>
+                            <label for="rememberMe" class="checkbox-custom-label">Ingat Saya</label>
+                        </div>
                             <a href="forgot-password.html" class="link-forgot-password">Lupa Kata Sandi?</a>
                         </div>
 
                         <button type="submit" class="btn-login-submit">Masuk</button>
 
                     </form>
-
+                    
                     <div class="form-redirect-footer">
                         <span>Belum punya akun?</span>
                         <a href="register.html" class="link-register-redirect">Daftar</a>
