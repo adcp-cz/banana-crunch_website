@@ -52,17 +52,22 @@ if (mysqli_num_rows($result) > 0) {
 
         /* --- SIDEBAR --- */
         .sidebar {
-            width: var(--sidebar-width);
-            height: 100vh;
-            position: fixed;
-            top: 0; left: 0;
-            background-color: var(--bg-sidebar);
-            border-right: 1px solid #EFEFEF;
-            padding: 30px 24px;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-        }
+    width: var(--sidebar-width);
+    /* Kurangi tinggi layar tepat sebesar ukuran navbar atas (80px) */
+    height: calc(100vh - 80px); 
+    position: fixed;
+    /* Turunkan sejauh ukuran navbar (80px) dan JANGAN LUPA 'px' */
+    top: 80px; 
+    left: 0;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid #EFEFEF;
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    /* Tambahan agar jika layarnya kecil, sidebarnya bisa di-scroll ke bawah */
+    overflow-y: auto; 
+}
         .admin-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; }
         .admin-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
         
@@ -183,6 +188,7 @@ if (mysqli_num_rows($result) > 0) {
     </style>
 </head>
 <body>
+    <?php include '../navbar_login.php'; ?>
 
     <aside class="sidebar">
         <div>
@@ -194,10 +200,10 @@ if (mysqli_num_rows($result) > 0) {
                 </div>
             </div>
             <ul class="sidebar-menu">
-                <li class="mb-2"><a href="dashboard.html" class="menu-link"><i class="fas fa-th-large"></i> Ringkasan</a></li>
+                <li class="mb-2"><a href="dashboard.php" class="menu-link"><i class="fas fa-th-large"></i> Ringkasan</a></li>
                 <li class="mb-2"><a href="products.php" class="menu-link active"><i class="fas fa-box"></i> Produk</a></li>
-                <li class="mb-2"><a href="#" class="menu-link"><i class="fas fa-shopping-cart"></i> Pesanan</a></li>
-                <li class="mb-2"><a href="#" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
+                <li class="mb-2"><a href="orders.php" class="menu-link"><i class="fas fa-shopping-cart"></i> Pesanan</a></li>
+                <li class="mb-2"><a href="users.php" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
             </ul>
         </div>
         <a href="../login.php" class="menu-link text-danger mt-auto"><i class="fas fa-sign-out-alt"></i> Keluar</a>

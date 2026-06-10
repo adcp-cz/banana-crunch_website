@@ -255,6 +255,7 @@
     </style>
 </head>
 <body>
+    <?php include 'navbar_login.php'; ?>
 
     <div class="container-fluid p-0">
         <div class="row g-0 login-container">

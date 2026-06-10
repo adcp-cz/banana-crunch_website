@@ -34,14 +34,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Jika password benar, set Session
             $_SESSION['user_id'] = $row['id'];
-            $_SESSION['user_role'] = $row['role'];
+            
+            // PERBAIKAN: Ubah 'user_role' menjadi 'role' agar sinkron dengan file dashboard
+            $_SESSION['role'] = $row['role']; 
             $_SESSION['user_name'] = $row['name'];
 
             // Cek Role: Arahkan ke dashboard yang sesuai
             if ($row['role'] == 'admin') {
-                header("Location: admin/dashboard.html"); // Nanti ubah ke .php jika dashboard admin sudah diganti ekstensinya
+                header("Location: admin/dashboard.php");
             } else {
-                header("Location: user/dashboard.html"); // Nanti ubah ke .php juga
+                header("Location: user/dashboard.php"); 
             }
             exit;
             

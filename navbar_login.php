@@ -1,0 +1,33 @@
+<?php
+// Logika cerdas untuk mendeteksi lokasi file.
+// Jika navbar ini dipanggil dari dalam folder 'admin' ATAU 'user', 
+// sistem akan otomatis menambahkan '../' agar link "Kembali" tidak error.
+$path_prefix = (strpos($_SERVER['PHP_SELF'], '/admin/') !== false || strpos($_SERVER['PHP_SELF'], '/user/') !== false) ? '../' : '';
+?>
+
+<nav class="navbar navbar-expand-lg fixed-top" style="padding: 15px 0; background: #FFFFFF; border-bottom: 1px solid #EFEFEF; box-shadow: 0 4px 20px rgba(0,0,0,0.02); z-index: 1050;">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="<?= $path_prefix ?>index.php" style="color: #8A6F00 !important; font-size: 1.5rem; letter-spacing: -0.5px;">
+            PisangKraf
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarLogin" style="border: none;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarLogin">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link fw-semibold px-4 py-2" href="<?= $path_prefix ?>index.php" 
+                       style="color: #1F1F1F; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 50px; transition: all 0.3s ease;"
+                       onmouseover="this.style.backgroundColor='#FFD600'; this.style.borderColor='#FFD600';"
+                       onmouseout="this.style.backgroundColor='#F9FAFB'; this.style.borderColor='#E5E7EB';">
+                        <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div style="height: 80px;"></div>

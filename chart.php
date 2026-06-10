@@ -103,30 +103,41 @@ $jumlah_item = mysqli_num_rows($result);
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">PisangKraf</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="products.php">Products</a></li>
-                </ul>
-                <div class="nav-icons d-flex align-items-center mt-3 mt-lg-0">
-                    <a href="products.php"><i class="fas fa-search"></i></a>
-                    <a href="#"><i class="far fa-user"></i></a>
-                    <a href="cart.php" class="position-relative" style="color: var(--secondary);">
-                        <i class="fas fa-shopping-cart"></i>
-                        <?php if($jumlah_item > 0): ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill cart-badge"><?= $jumlah_item ?></span>
-                        <?php endif; ?>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php require_once __DIR__ . '/components/navbar.php';?>
+
+    <style>
+        /* --- NAVBAR --- */
+        .navbar-custom {
+            padding: 15px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--secondary) !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark) !important;
+            margin: 0 10px;
+            transition: var(--transition);
+        }
+        .nav-link:hover, .nav-link.active { color: var(--secondary) !important; }
+        .nav-icons a {
+            color: var(--text-dark);
+            margin-left: 20px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .nav-icons a:hover { color: var(--secondary); }
+        .cart-badge {
+            background-color: var(--secondary);
+            font-size: 0.6rem;
+            transform: translate(-10px, -10px);
+        }
+    </style>
 
     <section class="cart-section">
         <div class="container">
