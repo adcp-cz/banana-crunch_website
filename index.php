@@ -304,9 +304,9 @@ $result = mysqli_query($koneksi, $query);
         <div class="container hero-content">
             <div class="row">
                 <div class="col-lg-7 col-md-9" data-aos="fade-up" data-aos-duration="1000">
-                    <div class="badge-artisanal">Artisanal Banana Delights</div>
+                    <div class="badge-artisanal">Jajan Pisang</div>
                     <h1 class="hero-title">Cita Rasa Pisang Tradisional,<br>Gaya Modern.</h1>
-                    <p class="hero-desc">PisangKraf menghadirkan berbagai olahan pisang berkualitas premium dengan cita rasa khas Indonesia.</p>
+                    <p class="hero-desc">Jajan Pisang menghadirkan berbagai olahan pisang berkualitas premium dengan cita rasa khas Indonesia.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <a href="products.php" class="btn-primary-custom">Belanja Sekarang</a>
                         <a href="#produk" class="btn-outline-custom px-4 py-2">Lihat Produk</a>

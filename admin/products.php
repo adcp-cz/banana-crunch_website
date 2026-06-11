@@ -213,7 +213,7 @@ if (mysqli_num_rows($result) > 0) {
         <header class="page-header">
             <div>
                 <h2 class="fw-bold mb-1">Manajemen Produk</h2>
-                <p class="text-muted small mb-0">Kelola katalog produk PisangKraf Anda di sini.</p>
+                <p class="text-muted small mb-0">Kelola katalog produk Jajan Pisang Anda di sini.</p>
             </div>
             <button class="btn-add" data-bs-toggle="modal" data-bs-target="#modalTambah">
                 <i class="fas fa-plus me-2"></i> Tambah Produk

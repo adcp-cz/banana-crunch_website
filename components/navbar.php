@@ -160,7 +160,7 @@ if (isset($_SESSION['user_id'])) {
     <div class="container">
 
         <a class="navbar-brand" href="index.php">
-            PisangKraf
+            Jajan Pisang
         </a>
 
         <button

@@ -78,7 +78,7 @@
 
     <header class="about-hero" data-aos="fade-in">
         <div class="container">
-            <h1 class="text-uppercase">Tentang PisangKraf</h1>
+            <h1 class="text-uppercase">Tentang Jajan Pisang</h1>
             <p class="text-muted lead">Mengolah komoditas lokal menjadi produk bernilai tinggi.</p>
         </div>
     </header>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <h2 class="fw-bold mb-4">Filosofi Kami</h2>
-                    <p class="mb-4 text-muted">Didirikan di Purwokerto, PisangKraf lahir dari kecintaan kami terhadap potensi hasil bumi Indonesia. Kami percaya bahwa pengolahan yang tepat—mulai dari pemilihan bahan baku hingga proses produksi—dapat mengangkat derajat produk lokal ke taraf premium.</p>
+                    <p class="mb-4 text-muted">Didirikan di Purwokerto, Jajan Pisang lahir dari kecintaan kami terhadap potensi hasil bumi Indonesia. Kami percaya bahwa pengolahan yang tepat—mulai dari pemilihan bahan baku hingga proses produksi—dapat mengangkat derajat produk lokal ke taraf premium.</p>
                     <p class="text-muted">Fokus kami bukan sekadar berjualan, melainkan membangun ekosistem yang menghubungkan kualitas petani dengan keinginan konsumen akan camilan yang sehat, alami, dan autentik.</p>
                 </div>
             </div>
@@ -128,7 +128,7 @@
 
     <footer class="py-5 mt-5 bg-light text-center">
         <div class="container">
-            <p class="text-muted">&copy; 2026 PisangKraf. Semua Hak Dilindungi.</p>
+            <p class="text-muted">&copy; 2026 Jajan Pisang. Semua Hak Dilindungi.</p>
         </div>
     </footer>
 

@@ -262,7 +262,7 @@
             
             <div class="col-lg-6 d-none d-lg-flex login-left">
                 <div class="brand-wrapper">
-                    <h1 class="brand-logo-text">PisangKraf</h1>
+                    <h1 class="brand-logo-text">Jajan Pisang</h1>
                     <p class="brand-slogan">Kelezatan Pisang Dalam Setiap Gigitan</p>
                 </div>
             </div>
