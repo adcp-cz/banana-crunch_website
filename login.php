@@ -290,6 +290,7 @@
                             </div>
                         </div>
 
+                        
                         <div class="form-options-row">
                             <div class="form-check d-flex align-items-center gap-2 p-0 m-0">
                                 <input type="checkbox" id="rememberMe" class="form-check-input form-check-input-custom m-0">
