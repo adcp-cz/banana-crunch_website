@@ -6,6 +6,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $cartCount = 0;
+$userInitials = '';
+$userName = '';
 
 if (isset($_SESSION['user_id'])) {
 
@@ -13,6 +15,7 @@ if (isset($_SESSION['user_id'])) {
 
     $user_id = (int) $_SESSION['user_id'];
 
+    // Ambil data keranjang
     $queryCart = mysqli_query(
         $koneksi,
         "SELECT SUM(qty) AS total_qty
@@ -24,6 +27,17 @@ if (isset($_SESSION['user_id'])) {
         $dataCart = mysqli_fetch_assoc($queryCart);
         $cartCount = (int) ($dataCart['total_qty'] ?? 0);
     }
+
+    // Ambil data nama user jika tidak ada di session
+    if (!isset($_SESSION['user_name'])) {
+        $queryUser = mysqli_query($koneksi, "SELECT name FROM users WHERE id = $user_id");
+        $userData = mysqli_fetch_assoc($queryUser);
+        $_SESSION['user_name'] = $userData['name'];
+    }
+    
+    $userName = $_SESSION['user_name'];
+    $nameParts = explode(" ", $userName);
+    $userInitials = strtoupper(substr($nameParts[0], 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
 }
 ?>
 
@@ -102,11 +116,35 @@ if (isset($_SESSION['user_id'])) {
         font-size: var(--text-lg);
         position: relative;
         transition: all .3s ease;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
     }
 
     .icon-link:hover {
         color: var(--color-primary-dark);
         transform: translateY(-2px);
+    }
+
+    .user-initials-circle {
+        width: 35px;
+        height: 35px;
+        background-color: #FFD600;
+        color: #8A6F00;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 14px;
+        border: 2px solid #8A6F00;
+        transition: all 0.3s ease;
+    }
+
+    .icon-link:hover .user-initials-circle {
+        background-color: #8A6F00;
+        color: #FFD600;
+        border-color: #FFD600;
     }
 
     .cart-badge{
@@ -233,8 +271,14 @@ if (isset($_SESSION['user_id'])) {
                     }
                 }
                 ?>
-                <a href="<?= $account_link ?>" class="icon-link">
-                    <i class="far fa-user"></i>
+                <a href="<?= $account_link ?>" class="icon-link" title="<?= isset($_SESSION['user_id']) ? htmlspecialchars($userName) : 'Login / Register' ?>">
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <div class="user-initials-circle">
+                            <?= $userInitials ?>
+                        </div>
+                    <?php else: ?>
+                        <i class="far fa-user"></i>
+                    <?php endif; ?>
                 </a>
 
             </div>
