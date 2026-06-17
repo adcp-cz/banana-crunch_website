@@ -61,98 +61,9 @@ function tanggal_indo($tanggal) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/user.css">
 
     <style>
-        /* --- DESIGN SYSTEM REUSE --- */
-        :root {
-            --primary: #FFD600;
-            --secondary: #8A6F00;
-            --bg-main: #FAFAFA;
-            --bg-sidebar: #FFFFFF;
-            --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
-            --text-muted: #8E8E93;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --radius-pill: 50px;
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
-            --sidebar-width: 280px;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-dark);
-        }
-
-        /* --- SIDEBAR STYLING --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: calc(100vh - 80px);
-            position: fixed;
-            top: 80px; left: 0;
-            background-color: var(--bg-sidebar);
-            border-right: 1px solid #EFEFEF;
-            padding: 30px 24px;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            overflow-y: auto;
-        }
-
-        .user-profile-summary {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #EFEFEF;
-            margin-top: 20px;
-        }
-
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            background-color: #FEF3C7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: #D97706;
-            font-size: 1.2rem;
-            border: 1px solid #FDE68A;
-        }
-
-        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1; }
-        .menu-link {
-            display: flex; align-items: center; gap: 15px; padding: 14px 20px;
-            color: var(--text-dark); font-weight: 500; border-radius: var(--radius-md);
-            text-decoration: none; transition: var(--transition); margin-bottom: 8px;
-        }
-        .menu-link.active { background-color: var(--primary); font-weight: 600; }
-        .menu-link:hover:not(.active) { background-color: #F5F5F7; }
-
-        .logout-btn {
-            color: #DC3545; font-weight: 600; margin-top: auto; display: flex; 
-            align-items: center; gap: 12px; padding: 14px 20px; text-decoration: none; 
-            border-radius: var(--radius-md); transition: var(--transition);
-        }
-        .logout-btn:hover { background-color: #FFF5F5; }
-
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 40px;
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-        }
-
-        .welcome-header { margin-bottom: 40px; }
-        .welcome-title { font-weight: 700; font-size: 2rem; color: var(--text-dark); margin-bottom: 5px; }
-
         /* --- STAT CARDS --- */
         .stat-card {
             background-color: var(--card-bg);
@@ -236,38 +147,12 @@ function tanggal_indo($tanggal) {
             font-weight: 500; transition: var(--transition); text-decoration: none; display: inline-block;
         }
         .btn-detail:hover { background-color: var(--text-dark); color: #fff; border-color: var(--text-dark); }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 991.98px) {
-            .sidebar { transform: translateX(-100%); }
-            .main-content { margin-left: 0; padding: 24px; }
-            .activity-item { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .item-status, .item-action { text-align: left; width: 100%; }
-        }
     </style>
 </head>
 <body>
 
     <?php include '../navbar_login.php'; ?>
-
-    <aside class="sidebar">
-        <div class="user-profile-summary">
-            <div class="user-avatar"><?= $inisial ?></div>
-            <div>
-                <h6 class="mb-0 fw-bold"><?= htmlspecialchars($nama_lengkap) ?></h6>
-                <small class="text-muted">Pelanggan Setia</small>
-            </div>
-        </div>
-
-        <ul class="sidebar-menu">
-            <li><a href="dashboard.php" class="menu-link active"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="pesanan.php" class="menu-link"><i class="fas fa-shopping-bag"></i> Pesanan Saya</a></li>
-            <li><a href="../index.php" class="menu-link"><i class="fas fa-store"></i> Belanja Lagi</a></li>
-            <li><a href="profil_user.php" class="menu-link"><i class="far fa-user"></i> Profil</a></li>
-        </ul>
-
-        <a href="../logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
-    </aside>
+    <?php include '../components/user-sidebar.php'; ?>
 
     <main class="main-content">
         
