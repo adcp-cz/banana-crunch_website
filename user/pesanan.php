@@ -137,7 +137,7 @@ function tanggal_indo($tanggal) {
             <li><a href="profil_user.php" class="menu-link"><i class="far fa-user"></i> Profil</a></li>
         </ul>
 
-        <a href="../login.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+        <a href="../logout.php" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
     </aside>
 
     <main class="main-content">

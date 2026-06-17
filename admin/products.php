@@ -206,7 +206,7 @@ if (mysqli_num_rows($result) > 0) {
                 <li class="mb-2"><a href="users.php" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
             </ul>
         </div>
-        <a href="../login.php" class="menu-link text-danger mt-auto"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+        <a href="../logout.php" class="menu-link text-danger mt-auto"><i class="fas fa-sign-out-alt"></i> Keluar</a>
     </aside>
 
     <main class="main-content">

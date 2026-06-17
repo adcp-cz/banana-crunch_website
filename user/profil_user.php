@@ -138,7 +138,7 @@ $inisial = strtoupper(substr($kata[0], 0, 1) . (isset($kata[1]) ? substr($kata[1
             <li><a href="profil_user.php" class="menu-link active"><i class="far fa-user"></i> Profil</a></li>
         </ul>
 
-        <a href="../login.php" class="menu-link logout-btn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+        <a href="../logout.php" class="menu-link logout-btn"><i class="fas fa-sign-out-alt"></i> Keluar</a>
     </aside>
 
     <main class="main-content">

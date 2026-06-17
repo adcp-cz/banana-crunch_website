@@ -223,7 +223,17 @@ if (isset($_SESSION['user_id'])) {
                     <?php endif; ?>
                 </a>
 
-                <a href="login.php" class="icon-link">
+                <?php
+                $account_link = 'login.php';
+                if (isset($_SESSION['user_id'])) {
+                    if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                        $account_link = 'admin/dashboard.php';
+                    } else {
+                        $account_link = 'user/dashboard.php';
+                    }
+                }
+                ?>
+                <a href="<?= $account_link ?>" class="icon-link">
                     <i class="far fa-user"></i>
                 </a>
 
