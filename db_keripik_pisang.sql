@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2026 at 03:57 PM
+-- Generation Time: Jun 17, 2026 at 04:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,6 +45,20 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `qty`, `created_at`, `updated
 (2, 4, 4, 1, '2026-06-09 14:04:09', '2026-06-09 14:04:09'),
 (3, 1, 5, 1, '2026-06-09 17:53:46', '2026-06-09 17:53:46'),
 (4, 1, 1, 5, '2026-06-09 17:55:31', '2026-06-09 17:55:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `foto`
+--
+
+CREATE TABLE `foto` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `nama_foto` varchar(255) NOT NULL,
+  `is_utama` tinyint(1) DEFAULT 0 COMMENT '1 jika foto profil utama, 0 jika foto tambahan',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -230,6 +244,13 @@ ALTER TABLE `cart`
   ADD KEY `fk_cart_product` (`product_id`);
 
 --
+-- Indexes for table `foto`
+--
+ALTER TABLE `foto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_foto_user` (`user_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
@@ -280,6 +301,12 @@ ALTER TABLE `cart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `foto`
+--
+ALTER TABLE `foto`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -319,6 +346,12 @@ ALTER TABLE `users`
 ALTER TABLE `cart`
   ADD CONSTRAINT `fk_cart_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_cart_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `foto`
+--
+ALTER TABLE `foto`
+  ADD CONSTRAINT `fk_foto_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orders`
