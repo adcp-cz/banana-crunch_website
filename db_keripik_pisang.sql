@@ -176,6 +176,20 @@ INSERT INTO `products` (`id`, `name`, `slug`, `description`, `price`, `stock`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `foto`
+--
+
+CREATE TABLE `foto` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `nama_foto` varchar(255) NOT NULL,
+  `is_utama` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `reviews`
 --
 
@@ -245,6 +259,13 @@ ALTER TABLE `cart`
 
 --
 -- Indexes for table `foto`
+--
+ALTER TABLE `foto`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_foto_user` (`user_id`);
+
+--
+-- Indexes for table `orders`
 --
 ALTER TABLE `foto`
   ADD PRIMARY KEY (`id`),

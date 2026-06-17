@@ -3,6 +3,20 @@
 // Jika navbar ini dipanggil dari dalam folder 'admin' ATAU 'user', 
 // sistem akan otomatis menambahkan '../' agar link "Kembali" tidak error.
 $path_prefix = (strpos($_SERVER['PHP_SELF'], '/admin/') !== false || strpos($_SERVER['PHP_SELF'], '/user/') !== false) ? '../' : '';
+
+// Jika sudah login, ambil data foto profil
+$user_photo = null;
+if (isset($_SESSION['user_id'])) {
+    if (!isset($koneksi)) {
+        require_once __DIR__ . '/database/koneksi.php';
+    }
+    $uid = $_SESSION['user_id'];
+    $q_foto = mysqli_query($koneksi, "SELECT nama_foto FROM foto WHERE user_id = $uid ORDER BY created_at DESC LIMIT 1");
+    if ($q_foto && mysqli_num_rows($q_foto) > 0) {
+        $f_data = mysqli_fetch_assoc($q_foto);
+        $user_photo = $path_prefix . 'assets/images/users/' . $f_data['nama_foto'];
+    }
+}
 ?>
 
 <nav class="navbar navbar-expand-lg fixed-top" style="padding: 15px 0; background: #FFFFFF; border-bottom: 1px solid #EFEFEF; box-shadow: 0 4px 20px rgba(0,0,0,0.02); z-index: 1050;">
@@ -17,6 +31,11 @@ $path_prefix = (strpos($_SERVER['PHP_SELF'], '/admin/') !== false || strpos($_SE
 
         <div class="collapse navbar-collapse" id="navbarLogin">
             <ul class="navbar-nav ms-auto align-items-center">
+                <?php if ($user_photo): ?>
+                <li class="nav-item me-3">
+                    <img src="<?= $user_photo ?>" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #FFD600;">
+                </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold px-4 py-2" href="<?= $path_prefix ?>index.php" 
                        style="color: #1F1F1F; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 50px; transition: all 0.3s ease;"

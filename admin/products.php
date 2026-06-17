@@ -3,6 +3,14 @@ session_start();
 // Pastikan file koneksi sudah benar
 require '../database/koneksi.php';
 
+// 1. PROTEKSI HALAMAN ADMIN
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
+    exit();
+}
+
+$admin_id = $_SESSION['user_id'];
+
 // Ambil semua data produk dari database, urutkan dari yang terbaru
 $query = "SELECT * FROM products ORDER BY id DESC";
 $result = mysqli_query($koneksi, $query);
@@ -26,65 +34,20 @@ if (mysqli_num_rows($result) > 0) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
 
     <style>
-        /* --- DESIGN SYSTEM REUSE --- */
-        :root {
-            --primary: #FFD600;
-            --secondary: #8A6F00;
-            --bg-main: #FAFAFA;
-            --bg-sidebar: #FFFFFF;
-            --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
-            --text-muted: #8E8E93;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
-            --sidebar-width: 280px;
-            --transition: all 0.3s ease;
+        /* --- PRODUCTS SPECIFIC STYLES --- */
+        .btn-add {
+            background-color: var(--text-dark);
+            color: #fff;
+            border-radius: var(--radius-md);
+            padding: 10px 20px;
+            font-weight: 500;
+            border: none;
+            transition: var(--transition);
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-dark);
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-    width: var(--sidebar-width);
-    /* Kurangi tinggi layar tepat sebesar ukuran navbar atas (80px) */
-    height: calc(100vh - 80px); 
-    position: fixed;
-    /* Turunkan sejauh ukuran navbar (80px) dan JANGAN LUPA 'px' */
-    top: 80px; 
-    left: 0;
-    background-color: var(--bg-sidebar);
-    border-right: 1px solid #EFEFEF;
-    padding: 30px 24px;
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-    /* Tambahan agar jika layarnya kecil, sidebarnya bisa di-scroll ke bawah */
-    overflow-y: auto; 
-}
-        .admin-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; }
-        .admin-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
-        
-        .sidebar-menu { list-style: none; padding: 0; flex-grow: 1;}
-        .menu-link {
-            display: flex; align-items: center; gap: 15px; padding: 14px 20px;
-            color: var(--text-dark); font-weight: 500; border-radius: var(--radius-md);
-            text-decoration: none; transition: var(--transition);
-        }
-        .menu-link.active { background-color: var(--primary); font-weight: 600; }
-        .menu-link:hover:not(.active) { background-color: #F5F5F7; }
-
-        /* --- MAIN CONTENT --- */
-        .main-content {
-            margin-left: var(--sidebar-width);
-            padding: 40px;
-        }
+        .btn-add:hover { background-color: var(--secondary); transform: translateY(-2px); color: #fff;}
 
         .page-header {
             display: flex;
@@ -135,18 +98,6 @@ if (mysqli_num_rows($result) > 0) {
         .status-available { background-color: #DCFCE7; color: #15803D; }
         .status-empty { background-color: #FEE2E2; color: #B91C1C; }
 
-        /* --- BUTTONS --- */
-        .btn-add {
-            background-color: var(--text-dark);
-            color: #fff;
-            border-radius: var(--radius-md);
-            padding: 10px 20px;
-            font-weight: 500;
-            border: none;
-            transition: var(--transition);
-        }
-        .btn-add:hover { background-color: var(--secondary); transform: translateY(-2px); color: #fff;}
-
         .btn-action {
             width: 34px;
             height: 34px;
@@ -190,24 +141,7 @@ if (mysqli_num_rows($result) > 0) {
 <body>
     <?php include '../navbar_login.php'; ?>
 
-    <aside class="sidebar">
-        <div>
-            <div class="admin-profile">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" class="admin-avatar" alt="Admin">
-                <div class="admin-info">
-                    <h6 class="mb-0 fw-bold">Admin Panel</h6>
-                    <small class="text-muted">Manajer Produk</small>
-                </div>
-            </div>
-            <ul class="sidebar-menu">
-                <li class="mb-2"><a href="dashboard.php" class="menu-link"><i class="fas fa-th-large"></i> Ringkasan</a></li>
-                <li class="mb-2"><a href="products.php" class="menu-link active"><i class="fas fa-box"></i> Produk</a></li>
-                <li class="mb-2"><a href="orders.php" class="menu-link"><i class="fas fa-shopping-cart"></i> Pesanan</a></li>
-                <li class="mb-2"><a href="users.php" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
-            </ul>
-        </div>
-        <a href="../logout.php" class="menu-link text-danger mt-auto"><i class="fas fa-sign-out-alt"></i> Keluar</a>
-    </aside>
+    <?php include '../components/admin-sidebar.php'; ?>
 
     <main class="main-content">
         <header class="page-header">

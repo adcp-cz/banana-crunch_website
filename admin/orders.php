@@ -11,11 +11,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
 
 $admin_id = $_SESSION['user_id'];
 
-// Ambil Nama Admin untuk Sidebar
-$query_admin = mysqli_query($koneksi, "SELECT name FROM users WHERE id = $admin_id");
-$admin_data = mysqli_fetch_assoc($query_admin);
-$admin_name = $admin_data['name'] ?? 'Admin';
-
 // Ambil data pesanan beserta nama pelanggan dari tabel users menggunakan JOIN
 $query = "SELECT o.*, u.name AS customer_name 
           FROM orders o 
@@ -41,58 +36,10 @@ if ($result && mysqli_num_rows($result) > 0) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
 
     <style>
-        /* --- DESIGN SYSTEM REUSE --- */
-        :root {
-            --primary: #FFD600;
-            --secondary: #8A6F00;
-            --bg-main: #FAFAFA;
-            --bg-sidebar: #FFFFFF;
-            --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
-            --text-muted: #8E8E93;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
-            --sidebar-width: 280px;
-            --transition: all 0.3s ease;
-        }
-
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-main); color: var(--text-dark); overflow-x: hidden; }
-
-        /* --- SIDEBAR STYLING --- */
-        .sidebar {
-            width: var(--sidebar-width);
-            height: calc(100vh - 80px);
-            position: fixed;
-            top: 80px;
-            left: 0;
-            background-color: var(--bg-sidebar);
-            border-right: 1px solid #EFEFEF;
-            padding: 30px 24px;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-            overflow-y: auto;
-        }
-
-        .admin-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 40px; }
-        .admin-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
-        .admin-info h6 { font-size: 1rem; font-weight: 700; margin: 0; color: var(--text-dark); }
-        .admin-info small { font-size: 0.8rem; color: var(--text-muted); display: block; }
-
-        .sidebar-menu { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
-        .menu-link { display: flex; align-items: center; gap: 15px; padding: 14px 20px; color: var(--text-dark); font-weight: 500; font-size: 0.95rem; border-radius: var(--radius-md); text-decoration: none; transition: var(--transition); margin-bottom: 8px; }
-        .menu-link i { font-size: 1.1rem; width: 20px; text-align: center; color: var(--text-dark); }
-        .menu-link.active { background-color: var(--primary); font-weight: 600; }
-        .menu-link:hover:not(.active) { background-color: #F5F5F7; }
-
-        .logout-link { color: #DC3545; font-weight: 600; display: flex; align-items: center; gap: 12px; padding: 12px 20px; text-decoration: none; transition: var(--transition); border-radius: var(--radius-md); margin-top: auto; }
-        .logout-link:hover { background-color: #FFF5F5; }
-
-        /* --- MAIN CONTENT --- */
-        .main-content { margin-left: var(--sidebar-width); padding: 40px; margin-top: 80px; min-height: calc(100vh - 80px); }
+        /* --- ORDERS SPECIFIC STYLES --- */
         .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .table-card { background-color: var(--card-bg); border-radius: var(--radius-lg); padding: 25px; box-shadow: var(--shadow-soft); border: 1px solid #EFEFEF; }
         
@@ -109,35 +56,13 @@ if ($result && mysqli_num_rows($result) > 0) {
 
         .btn-action { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; background: #fff; color: var(--text-dark); transition: var(--transition); text-decoration: none; }
         .btn-action:hover { background-color: var(--primary); border-color: var(--primary); color: var(--text-dark); }
-
-        @media (max-width: 991.98px) {
-            .sidebar { transform: translateX(-100%); transition: var(--transition); }
-            .main-content { margin-left: 0; padding: 24px; }
-        }
     </style>
 </head>
 <body>
 
     <?php include '../navbar_login.php'; ?>
 
-    <aside class="sidebar">
-        <div>
-            <div class="admin-profile">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" class="admin-avatar" alt="Admin">
-                <div class="admin-info">
-                    <h6><?= htmlspecialchars($admin_name) ?></h6>
-                    <small>Naori Coffee Mgmt</small>
-                </div>
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="dashboard.php" class="menu-link"><i class="fas fa-th-large"></i> Ringkasan</a></li>
-                <li><a href="products.php" class="menu-link"><i class="fas fa-box"></i> Produk</a></li>
-                <li><a href="orders.php" class="menu-link active"><i class="fas fa-shopping-cart"></i> Pesanan</a></li>
-                <li><a href="users.php" class="menu-link"><i class="fas fa-users"></i> Pengguna</a></li>
-            </ul>
-        </div>
-        <a href="../logout.php" class="logout-link"><i class="fas fa-sign-out-alt"></i> Keluar</a>
-    </aside>
+    <?php include '../components/admin-sidebar.php'; ?>
 
     <main class="main-content">
         <header class="page-header">

@@ -153,7 +153,15 @@ $inisial = strtoupper(substr($kata[0], 0, 1) . (isset($kata[1]) ? substr($kata[1
             <div class="col-xl-4 col-lg-5">
                 <div class="profile-card h-100">
                     <div class="avatar-large-container">
-                        <div class="user-avatar-large"><?= $inisial ?></div>
+                        <?php
+                        $query_avatar = mysqli_query($koneksi, "SELECT nama_foto FROM foto WHERE user_id = $user_id ORDER BY created_at DESC LIMIT 1");
+                        $avatar_data = mysqli_fetch_assoc($query_avatar);
+                        if ($avatar_data):
+                        ?>
+                            <img src="../assets/images/users/<?= $avatar_data['nama_foto'] ?>" class="user-avatar-large" style="object-fit: cover; border: 4px solid var(--primary);">
+                        <?php else: ?>
+                            <div class="user-avatar-large"><?= $inisial ?></div>
+                        <?php endif; ?>
                         <h4 class="fw-bold mb-1"><?= htmlspecialchars($nama_lengkap) ?></h4>
                         <p class="text-muted mb-3"><?= htmlspecialchars($email) ?></p>
                         <span class="badge-role"><i class="fas fa-star me-1"></i> Pelanggan Setia</span>
@@ -183,8 +191,47 @@ $inisial = strtoupper(substr($kata[0], 0, 1) . (isset($kata[1]) ? substr($kata[1
                 </div>
             </div>
 
-            <div class="col-xl-8 col-lg-7">
-                <div class="profile-card h-100">
+                    <div class="col-xl-8 col-lg-7">
+                <div class="profile-card mb-4">
+                    <h5 class="fw-bold mb-4 border-bottom pb-3">Galeri Foto Saya</h5>
+                    
+                    <!-- Form Tambah Foto -->
+                    <form action="../proses_profil.php" method="POST" enctype="multipart/form-data" class="mb-4">
+                        <div class="input-group">
+                            <input type="file" name="foto" class="form-control" accept="image/*" required>
+                            <button class="btn btn-warning fw-bold px-4" type="submit">Tambah Foto</button>
+                        </div>
+                        <small class="text-muted mt-2 d-block">Maksimal 2MB, Format: JPG, JPEG, PNG</small>
+                    </form>
+
+                    <!-- List Foto -->
+                    <div class="row g-3">
+                        <?php
+                        $query_foto = mysqli_query($koneksi, "SELECT * FROM foto WHERE user_id = $user_id ORDER BY created_at DESC");
+                        if (mysqli_num_rows($query_foto) > 0):
+                            while ($f = mysqli_fetch_assoc($query_foto)):
+                        ?>
+                        <div class="col-md-3 col-6">
+                            <div class="position-relative group-hover">
+                                <img src="../assets/images/users/<?= $f['nama_foto'] ?>" class="img-fluid rounded border shadow-sm w-100" style="height: 120px; object-fit: cover;">
+                                <a href="../proses_profil.php?action=hapus&id=<?= $f['id'] ?>" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 rounded-circle" onclick="return confirm('Hapus foto ini?')">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <?php 
+                            endwhile;
+                        else:
+                        ?>
+                        <div class="col-12 text-center py-4 bg-light rounded border-dashed">
+                            <i class="far fa-image fs-2 text-muted mb-2 d-block"></i>
+                            <p class="text-muted mb-0">Belum ada foto tambahan.</p>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="profile-card">
                     <h5 class="fw-bold mb-4 border-bottom pb-3">Detail Informasi Akun</h5>
                     
                     <form action="profil_user.php" method="POST">

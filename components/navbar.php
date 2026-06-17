@@ -38,6 +38,11 @@ if (isset($_SESSION['user_id'])) {
     $userName = $_SESSION['user_name'];
     $nameParts = explode(" ", $userName);
     $userInitials = strtoupper(substr($nameParts[0], 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+
+    // Ambil foto profil terbaru
+    $queryPhoto = mysqli_query($koneksi, "SELECT nama_foto FROM foto WHERE user_id = $user_id ORDER BY created_at DESC LIMIT 1");
+    $userPhotoData = mysqli_fetch_assoc($queryPhoto);
+    $userPhoto = !empty($userPhotoData['nama_foto']) ? 'assets/images/users/' . $userPhotoData['nama_foto'] : null;
 }
 ?>
 
@@ -139,6 +144,13 @@ if (isset($_SESSION['user_id'])) {
         font-size: 14px;
         border: 2px solid #8A6F00;
         transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .user-initials-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .icon-link:hover .user-initials-circle {
@@ -274,7 +286,11 @@ if (isset($_SESSION['user_id'])) {
                 <a href="<?= $account_link ?>" class="icon-link" title="<?= isset($_SESSION['user_id']) ? htmlspecialchars($userName) : 'Login / Register' ?>">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <div class="user-initials-circle">
-                            <?= $userInitials ?>
+                            <?php if ($userPhoto): ?>
+                                <img src="<?= $userPhoto ?>" alt="<?= htmlspecialchars($userName) ?>">
+                            <?php else: ?>
+                                <?= $userInitials ?>
+                            <?php endif; ?>
                         </div>
                     <?php else: ?>
                         <i class="far fa-user"></i>
