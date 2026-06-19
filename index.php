@@ -253,6 +253,27 @@ $result = mysqli_query($koneksi, $query);
             transition: var(--transition);
         }
         .footer-links a:hover { color: var(--secondary); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 991.98px) {
+            .hero-title { font-size: 2.8rem; }
+            .hero-section { background-position: center; text-align: center; }
+            .hero-overlay { background: rgba(250,250,250,0.85); }
+            .hero-desc { margin-left: auto; margin-right: auto; }
+            .hero-content { display: flex; flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 767.98px) {
+            .hero-title { font-size: 2.2rem; }
+            .newsletter-form { flex-direction: column; background: transparent; box-shadow: none; padding: 0; }
+            .newsletter-input { margin-bottom: 10px; width: 100%; box-shadow: var(--shadow-soft); text-align: center; }
+            .newsletter-btn { padding: 15px; width: 100%; }
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-title { font-size: 1.8rem; }
+            .badge-artisanal { font-size: 0.8rem; padding: 6px 12px; }
+        }
     </style>
 </head>
 <body>

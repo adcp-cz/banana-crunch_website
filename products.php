@@ -168,6 +168,29 @@ $result = mysqli_query($koneksi, $query);
             transition: var(--transition);
         }
         .footer-links a:hover { color: var(--secondary); }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 991.98px) {
+            .page-header-banner { padding: 100px 0 40px; }
+            .page-header-banner h1 { font-size: 2.2rem; }
+        }
+
+        @media (max-width: 767.98px) {
+            .filter-container { 
+                display: flex; 
+                overflow-x: auto; 
+                padding: 10px 0; 
+                margin-bottom: 20px !important;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .filter-container::-webkit-scrollbar { display: none; }
+            .filter-btn { flex: 0 0 auto; white-space: nowrap; padding: 8px 18px; font-size: 0.85rem; }
+            
+            .page-header-banner { padding: 80px 0 30px; }
+            .page-header-banner h1 { font-size: 1.8rem; }
+            .page-header-banner p { font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
@@ -219,7 +242,7 @@ $result = mysqli_query($koneksi, $query);
     <section class="py-4">
         <div class="container">
             
-            <div class="text-center mb-5" data-aos="fade-up">
+            <div class="text-center mb-5 filter-container" data-aos="fade-up">
                 <a href="products.php" class="filter-btn <?= empty($kategori_dipilih) ? 'active' : '' ?>">Semua</a>
                 <a href="products.php?category=Original" class="filter-btn <?= ($kategori_dipilih == 'Original') ? 'active' : '' ?>">Original</a>
                 <a href="products.php?category=Pedas" class="filter-btn <?= ($kategori_dipilih == 'Pedas') ? 'active' : '' ?>">Pedas</a>

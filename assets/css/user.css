@@ -14,7 +14,7 @@
     --radius-pill: 50px;
     --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.03);
     --sidebar-width: 280px;
-    --transition: all 0.3s ease;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -34,8 +34,9 @@ body {
     padding: 30px 24px;
     display: flex;
     flex-direction: column;
-    z-index: 100;
+    z-index: 1040;
     overflow-y: auto;
+    transition: var(--transition);
 }
 
 .user-profile-summary {
@@ -62,6 +63,7 @@ body {
     font-size: 1.2rem;
     border: 1px solid #FDE68A;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .user-avatar-sidebar img {
@@ -87,11 +89,58 @@ body {
 .logout-btn:hover { background-color: #FFF5F5; }
 
 /* --- MAIN CONTENT WINDOW --- */
-.main-content { margin-left: var(--sidebar-width); padding: 40px; margin-top: 80px; min-height: calc(100vh - 80px); }
+.main-content { 
+    margin-left: var(--sidebar-width); 
+    padding: 40px; 
+    margin-top: 80px; 
+    min-height: calc(100vh - 80px); 
+    transition: var(--transition);
+}
+
+/* --- OVERLAY FOR MOBILE SIDEBAR --- */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1035;
+    display: none;
+    backdrop-filter: blur(2px);
+}
+
+.sidebar-overlay.show {
+    display: block;
+}
 
 /* Responsive */
 @media (max-width: 991.98px) {
-    .sidebar { transform: translateX(-100%); transition: var(--transition); }
-    .main-content { margin-left: 0; padding: 24px; }
-    .sidebar.show { transform: translateX(0); }
+    .sidebar { 
+        transform: translateX(-100%); 
+        top: 0;
+        height: 100vh;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.1);
+    }
+    .main-content { 
+        margin-left: 0; 
+        padding: 24px; 
+    }
+    .sidebar.show { 
+        transform: translateX(0); 
+    }
+    
+    .brand-logo {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .main-content {
+        padding: 20px 15px;
+    }
+    
+    .page-title {
+        font-size: 1.5rem !important;
+    }
 }
