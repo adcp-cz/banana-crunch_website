@@ -69,9 +69,9 @@ for ($i = 6; $i >= 0; $i--) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PisangKraf | Admin Panel Management</title>
+    <title>Jajan Pisang | Admin Panel Management</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/admin.css">
@@ -294,14 +294,14 @@ for ($i = 6; $i >= 0; $i--) {
                 scales: {
                     x: {
                         grid: { display: false }, 
-                        ticks: { color: '#8E8E93', font: { family: 'Poppins' } }
+                        ticks: { color: '#8E8E93', font: { family: 'Open Sans' } }
                     },
                     y: {
                         min: 0,
                         // Menghapus 'max: 4.5' agar chart bisa terus membesar jika pendapatan tembus lebih dari 4.5 Juta
                         ticks: {
                             color: '#8E8E93',
-                            font: { family: 'Poppins' }
+                            font: { family: 'Open Sans' }
                         },
                         grid: { color: '#F2F2F7' }
                     }
@@ -311,3 +311,4 @@ for ($i = 6; $i >= 0; $i--) {
     </script>
 </body>
 </html>
+

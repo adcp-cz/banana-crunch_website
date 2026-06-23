@@ -1,10 +1,10 @@
-/* ==========================================================================
-   PISANGKRAF DESIGN SYSTEM
+﻿/* ==========================================================================
+   JAJAN PISANG DESIGN SYSTEM
    Modern, Clean, Minimalist & Premium UMKM UI
    ========================================================================== */
 
 /* Mengimpor Font Poppins langsung ke dalam sistem desain */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
     /* --- COLOR PALETTE --- */
@@ -22,7 +22,7 @@
     --color-border: #E5E7EB;
 
     /* --- TYPOGRAPHY --- */
-    --font-family: 'Poppins', sans-serif;
+    --font-family: 'Open Sans', sans-serif;
     
     /* Font Sizes */
     --text-xs: 0.75rem;     /* 12px */
@@ -250,3 +250,4 @@ a:hover {
 .section-padding {
     padding: 80px 0;
 }
+

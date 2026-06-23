@@ -1,4 +1,4 @@
-/* --- ADMIN SHARED STYLES --- */
+﻿/* --- ADMIN SHARED STYLES --- */
 
 :root {
     --primary: #FFD600;
@@ -6,7 +6,7 @@
     --bg-main: #FAFAFA;
     --bg-sidebar: #FFFFFF;
     --card-bg: #FFFFFF;
-    --text-dark: #1F1F1F;
+    --text-dark: rgb(68, 68, 68);
     --text-muted: #8E8E93;
     --radius-lg: 20px;
     --radius-md: 12px;
@@ -16,7 +16,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: var(--bg-main);
     color: var(--text-dark);
     overflow-x: hidden;
@@ -109,3 +109,5 @@ body {
         padding: 20px 15px;
     }
 }
+
+

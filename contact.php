@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontak Kami | PisangKraf</title>
+    <title>Kontak Kami | Jajan Pisang</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -16,12 +16,12 @@
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
             --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-muted: #6c757d;
             --radius-btn: 30px;
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-light); color: var(--text-dark); padding-top: 100px; }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); padding-top: 100px; }
         
          
 
@@ -97,7 +97,7 @@
                         <div class="icon-box"><i class="fas fa-envelope"></i></div>
                         <div>
                             <h6 class="fw-bold mb-1">Email</h6>
-                            <p class="text-muted mb-0">hello@pisangkraf.com</p>
+                            <p class="text-muted mb-0">hello@jajanpisang.com</p>
                         </div>
                     </div>
 
@@ -142,10 +142,12 @@
 
     <footer class="py-5 bg-white text-center border-top">
         <div class="container">
-            <p class="text-muted">&copy; 2026 PisangKraf. All rights reserved.</p>
+            <p class="text-muted">&copy; 2026 Jajan Pisang. All rights reserved.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+

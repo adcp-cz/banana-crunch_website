@@ -39,9 +39,9 @@ $image_path = 'assets/images/products/' . htmlspecialchars($product['image']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($product['name']) ?> | PisangKraf</title>
+    <title><?= htmlspecialchars($product['name']) ?> | Jajan Pisang</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -52,7 +52,7 @@ $image_path = 'assets/images/products/' . htmlspecialchars($product['image']);
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
             --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-muted: #6c757d;
             --radius-card: 20px;
             --radius-btn: 30px;
@@ -60,7 +60,7 @@ $image_path = 'assets/images/products/' . htmlspecialchars($product['image']);
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
         }
@@ -289,9 +289,9 @@ $image_path = 'assets/images/products/' . htmlspecialchars($product['image']);
 
     <footer>
         <div class="container text-center">
-            <div class="footer-logo">PisangKraf</div>
+            <div class="footer-logo">Jajan Pisang</div>
             <p class="text-muted fs-6 mb-4">Kelezatan olahan pisang nusantara kualitas premium.</p>
-            <div class="text-muted" style="font-size: 0.85rem;">&copy; 2026 PisangKraf. All rights reserved.</div>
+            <div class="text-muted" style="font-size: 0.85rem;">&copy; 2026 Jajan Pisang. All rights reserved.</div>
         </div>
     </footer>
 
@@ -319,3 +319,5 @@ $image_path = 'assets/images/products/' . htmlspecialchars($product['image']);
     </script>
 </body>
 </html>
+
+

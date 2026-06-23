@@ -30,7 +30,7 @@ if (!isset($nama_lengkap) || !isset($user_avatar)) {
 <aside class="sidebar">
     <a href="<?= $path_prefix ?>index.php" class="brand-logo mb-4 d-flex align-items-center gap-2 text-decoration-none">
         <i class="fas fa-leaf text-warning fs-3"></i>
-        <span class="fw-bold fs-4" style="color: var(--secondary);">PisangKraf</span>
+        <span class="fw-bold fs-4" style="color: var(--secondary);">Jajan Pisang</span>
     </a>
 
     <div class="user-profile-summary">
@@ -74,3 +74,4 @@ if (!isset($nama_lengkap) || !isset($user_avatar)) {
         <i class="fas fa-sign-out-alt"></i> Keluar
     </a>
 </aside>
+

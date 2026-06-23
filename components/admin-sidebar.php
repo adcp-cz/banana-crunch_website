@@ -22,7 +22,7 @@ if (!isset($admin_name) || !isset($admin_avatar)) {
             <img src="<?= $admin_avatar ?>" alt="Admin Avatar" class="admin-avatar">
             <div class="admin-info">
                 <h5><?= htmlspecialchars($admin_name) ?></h5>
-                <span>PisangKraf Management</span>
+                <span>Jajan Pisang Management</span>
             </div>
         </div>
 
@@ -58,3 +58,4 @@ if (!isset($admin_name) || !isset($admin_avatar)) {
         <i class="fas fa-sign-out-alt"></i> Keluar
     </a>
 </aside>
+

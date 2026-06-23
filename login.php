@@ -14,9 +14,9 @@ if (isset($_SESSION['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PisangKraf | Masuk ke Akun Anda</title>
+    <title>Jajan Pisang | Masuk ke Akun Anda</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -30,7 +30,7 @@ if (isset($_SESSION['user_id'])) {
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
             --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-secondary: #666666;
             --text-muted: #9CA3AF;
             --radius-md: 14px;
@@ -40,7 +40,7 @@ if (isset($_SESSION['user_id'])) {
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             min-height: 100vh;
@@ -344,3 +344,5 @@ if (isset($_SESSION['user_id'])) {
     </script>
 </body>
 </html>
+
+

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Kami | PisangKraf</title>
+    <title>Tentang Kami | Jajan Pisang</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -16,13 +16,13 @@
             --primary: #FFD600;
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-muted: #6c757d;
             --radius-md: 12px;
             --transition: all 0.3s ease;
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-light); color: var(--text-dark); }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); }
         
         
 
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <h2 class="fw-bold mb-4">Filosofi Kami</h2>
-                    <p class="mb-4 text-muted">Didirikan di Purwokerto, Jajan Pisang lahir dari kecintaan kami terhadap potensi hasil bumi Indonesia. Kami percaya bahwa pengolahan yang tepat—mulai dari pemilihan bahan baku hingga proses produksi—dapat mengangkat derajat produk lokal ke taraf premium.</p>
+                    <p class="mb-4 text-muted">Didirikan di Purwokerto, Jajan Pisang lahir dari kecintaan kami terhadap potensi hasil bumi Indonesia. Kami percaya bahwa pengolahan yang tepatâ€”mulai dari pemilihan bahan baku hingga proses produksiâ€”dapat mengangkat derajat produk lokal ke taraf premium.</p>
                     <p class="text-muted">Fokus kami bukan sekadar berjualan, melainkan membangun ekosistem yang menghubungkan kualitas petani dengan keinginan konsumen akan camilan yang sehat, alami, dan autentik.</p>
                 </div>
             </div>
@@ -137,3 +137,5 @@
     <script>AOS.init();</script>
 </body>
 </html>
+
+

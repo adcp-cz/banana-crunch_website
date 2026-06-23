@@ -3,15 +3,8 @@ session_start();
 // Hubungkan ke database
 require 'database/koneksi.php';
 
-// Menangkap filter kategori jika ada yang diklik (menggunakan metode GET)
-$kategori_dipilih = isset($_GET['category']) ? mysqli_real_escape_string($koneksi, $_GET['category']) : '';
-
-// Menyusun query MySQL berdasarkan filter kategori
-if (!empty($kategori_dipilih)) {
-    $query = "SELECT * FROM products WHERE is_active = 1 AND category = '$kategori_dipilih' ORDER BY id DESC";
-} else {
-    $query = "SELECT * FROM products WHERE is_active = 1 ORDER BY id DESC";
-}
+// Ambil semua produk yang berstatus aktif (is_active = 1) untuk difilter secara langsung (client-side)
+$query = "SELECT * FROM products WHERE is_active = 1 ORDER BY id DESC";
 
 $result = mysqli_query($koneksi, $query);
 ?>
@@ -21,9 +14,9 @@ $result = mysqli_query($koneksi, $query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog Produk | PisangKraf</title>
+    <title>Katalog Produk | Jajan Pisang</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -35,7 +28,7 @@ $result = mysqli_query($koneksi, $query);
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
             --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-muted: #6c757d;
             --radius-card: 20px;
             --radius-btn: 30px;
@@ -45,7 +38,7 @@ $result = mysqli_query($koneksi, $query);
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
         }
@@ -243,12 +236,12 @@ $result = mysqli_query($koneksi, $query);
         <div class="container">
             
             <div class="text-center mb-5 filter-container" data-aos="fade-up">
-                <a href="products.php" class="filter-btn <?= empty($kategori_dipilih) ? 'active' : '' ?>">Semua</a>
-                <a href="products.php?category=Original" class="filter-btn <?= ($kategori_dipilih == 'Original') ? 'active' : '' ?>">Original</a>
-                <a href="products.php?category=Pedas" class="filter-btn <?= ($kategori_dipilih == 'Pedas') ? 'active' : '' ?>">Pedas</a>
-                <a href="products.php?category=Manis" class="filter-btn <?= ($kategori_dipilih == 'Manis') ? 'active' : '' ?>">Manis</a>
-                <a href="products.php?category=Gurih" class="filter-btn <?= ($kategori_dipilih == 'Gurih') ? 'active' : '' ?>">Gurih</a>
-                <a href="products.php?category=Paket" class="filter-btn <?= ($kategori_dipilih == 'Paket') ? 'active' : '' ?>">Paket</a>
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="Original">Original</button>
+                <button class="filter-btn" data-filter="Pedas">Pedas</button>
+                <button class="filter-btn" data-filter="Manis">Manis</button>
+                <button class="filter-btn" data-filter="Gurih">Gurih</button>
+                <button class="filter-btn" data-filter="Paket">Paket</button>
             </div>
 
             <div class="row g-4">
@@ -259,7 +252,7 @@ $result = mysqli_query($koneksi, $query);
                         // Jalur gambar produk disesuaikan
                         $image_path = 'assets/images/products/' . htmlspecialchars($row['image']);
                 ?>
-                <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?= $delay ?>">
+                <div class="col-xl-3 col-lg-4 col-md-6 product-item" data-category="<?= htmlspecialchars($row['category']) ?>" data-aos="fade-up" data-aos-delay="<?= $delay ?>">
                     <div class="premium-card d-flex flex-column">
                         <div class="product-img-wrapper">
                             <span class="price-badge">Rp <?= number_format($row['price'], 0, ',', '.') ?></span>
@@ -281,10 +274,17 @@ $result = mysqli_query($koneksi, $query);
                 <div class="col-12 text-center py-5" data-aos="fade-up">
                     <div class="text-muted fs-5 py-4">
                         <i class="fas fa-box-open fa-2x mb-3 d-block text-secondary"></i>
-                        Maaf, produk untuk kategori "<b><?= htmlspecialchars($kategori_dipilih) ?></b>" belum tersedia saat ini.
+                        Belum ada produk aktif di dalam database.
                     </div>
                 </div>
                 <?php } ?>
+
+                <div id="no-products-msg" class="col-12 text-center py-5" style="display: none;">
+                    <div class="text-muted fs-5 py-4">
+                        <i class="fas fa-box-open fa-2x mb-3 d-block text-secondary"></i>
+                        Maaf, produk untuk kategori ini belum tersedia saat ini.
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -294,7 +294,7 @@ $result = mysqli_query($koneksi, $query);
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-md-5 mb-4 mb-md-0">
-                    <div class="footer-logo">PisangKraf</div>
+                    <div class="footer-logo">Jajan Pisang</div>
                     <p class="text-muted fs-6 pe-md-5">Menghadirkan kelezatan olahan pisang nusantara dengan sentuhan modern dan kualitas premium.</p>
                 </div>
                 <div class="col-md-2 footer-links">
@@ -310,7 +310,7 @@ $result = mysqli_query($koneksi, $query);
             </div>
             <hr class="mt-5 mb-3" style="border-color: #ddd;">
             <div class="text-center text-muted" style="font-size: 0.85rem;">
-                &copy; 2026 PisangKraf UMKM Artisanal Banana Delights. All rights reserved.
+                &copy; 2026 Jajan Pisang UMKM Artisanal Banana Delights. All rights reserved.
             </div>
         </div>
     </footer>
@@ -322,6 +322,47 @@ $result = mysqli_query($koneksi, $query);
             once: true,
             offset: 40,
         });
+
+        // Product Filtering Logic (Client-Side)
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const productItems = document.querySelectorAll('.product-item');
+            const noProductsMsg = document.getElementById('no-products-msg');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+
+                    const filterValue = btn.getAttribute('data-filter');
+                    let visibleCount = 0;
+
+                    productItems.forEach(item => {
+                        if (filterValue === 'all') {
+                            item.style.display = 'block';
+                            visibleCount++;
+                        } else {
+                            if (item.getAttribute('data-category') === filterValue) {
+                                item.style.display = 'block';
+                                visibleCount++;
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        }
+                    });
+
+                    if (noProductsMsg && productItems.length > 0) {
+                        noProductsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
+
+

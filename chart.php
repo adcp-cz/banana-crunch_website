@@ -40,9 +40,9 @@ $jumlah_item = mysqli_num_rows($result);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang Belanja | PisangKraf</title>
+    <title>Keranjang Belanja | Jajan Pisang</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -52,14 +52,14 @@ $jumlah_item = mysqli_num_rows($result);
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
             --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-muted: #6c757d;
             --radius-card: 20px;
             --radius-btn: 30px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-light); color: var(--text-dark); }
+        body { font-family: 'Open Sans', sans-serif; background-color: var(--bg-light); color: var(--text-dark); }
         a { text-decoration: none; }
 
         .navbar-custom { padding: 15px 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
@@ -236,9 +236,9 @@ $jumlah_item = mysqli_num_rows($result);
 
     <footer>
         <div class="container text-center">
-            <div class="footer-logo" style="font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 10px;">PisangKraf</div>
+            <div class="footer-logo" style="font-size: 1.5rem; font-weight: 700; color: var(--secondary); margin-bottom: 10px;">Jajan Pisang</div>
             <p class="text-muted fs-6 mb-3">Kelezatan olahan pisang nusantara kualitas premium.</p>
-            <div class="text-muted" style="font-size: 0.85rem;">&copy; 2026 PisangKraf. All rights reserved.</div>
+            <div class="text-muted" style="font-size: 0.85rem;">&copy; 2026 Jajan Pisang. All rights reserved.</div>
         </div>
     </footer>
 
@@ -293,3 +293,5 @@ $jumlah_item = mysqli_num_rows($result);
     </script>
 </body>
 </html>
+
+

@@ -64,15 +64,17 @@ if (isset($_SESSION['user_id'])) {
         box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
     }
 
-    .navbar-brand {
-        font-family: var(--font-family, 'Poppins', sans-serif);
-        font-weight: 800;
-        font-size: 1.5rem;
-        color: #0F172A !important;
-        letter-spacing: -0.5px;
-        background: linear-gradient(to right, #0F172A, #CA8A04);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+    /* Pengaturan Logo pada Navbar */
+    .navbar-logo {
+        height: 45px; /* Atur ukuran logo di sini */
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+        border-radius: 8px; /* Sudut sedikit melengkung */
+    }
+
+    .navbar-brand:hover .navbar-logo {
+        transform: scale(1.05); 
     }
 
     .nav-item {
@@ -80,7 +82,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .nav-link {
-        font-family: var(--font-family, 'Poppins', sans-serif);
+        font-family: var(--font-family, 'Open Sans', sans-serif);
         font-weight: 500;
         font-size: 1rem;
         color: #64748B !important;
@@ -90,7 +92,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .nav-link:hover {
-        color: #0F172A !important;
+        color: rgb(68, 68, 68) !important;
     }
 
     .nav-link::after {
@@ -112,7 +114,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .nav-link.active {
-        color: #0F172A !important;
+        color: rgb(68, 68, 68) !important;
         font-weight: 600;
     }
 
@@ -123,7 +125,7 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .icon-link {
-        color: #0F172A;
+        color: rgb(68, 68, 68);
         font-size: 1.15rem;
         position: relative;
         transition: all .3s ease;
@@ -139,7 +141,7 @@ if (isset($_SESSION['user_id'])) {
 
     .icon-link:hover {
         background: #FACC15;
-        color: #0F172A;
+        color: rgb(68, 68, 68);
         transform: translateY(-2px);
     }
 
@@ -188,99 +190,106 @@ if (isset($_SESSION['user_id'])) {
     }
 
     @media (max-width: 991.98px) {
-
         .custom-navbar {
             padding: 10px 0;
         }
-
         .nav-icons {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid var(--color-border);
             justify-content: center;
         }
-
         .nav-link::after {
             display: none;
         }
-
         .nav-link {
             padding: 10px 15px !important;
             border-radius: var(--radius-md);
         }
-
         .nav-link.active,
         .nav-link:hover {
             background: rgba(255,214,0,0.1);
         }
     }
+
+    /* Transparent Navbar for index.php */
+    .custom-navbar.navbar-transparent {
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    .custom-navbar.navbar-transparent.scrolled {
+        background-color: #ffffff !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08) !important;
+        border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    }
+
+    .custom-navbar.navbar-transparent:not(.scrolled) .nav-link {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .custom-navbar.navbar-transparent:not(.scrolled) .nav-link:hover,
+    .custom-navbar.navbar-transparent:not(.scrolled) .nav-link.active {
+        color: #ffffff !important;
+    }
+
+    .custom-navbar.navbar-transparent:not(.scrolled) .nav-link::after {
+        background-color: #ffffff;
+    }
+
+    .custom-navbar.navbar-transparent:not(.scrolled) .icon-link {
+        background: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+    }
+
+    .custom-navbar.navbar-transparent:not(.scrolled) .icon-link:hover {
+        background: rgba(255, 255, 255, 0.4);
+        color: #ffffff;
+    }
+
+    .custom-navbar.navbar-transparent:not(.scrolled) .navbar-toggler i {
+        color: #ffffff !important;
+    }
 </style>
 
-<nav class="navbar navbar-expand-lg fixed-top custom-navbar">
-
+<nav class="navbar navbar-expand-lg fixed-top custom-navbar <?= $currentPage == 'index.php' ? 'navbar-transparent' : '' ?>">
     <div class="container">
-
-        <a class="navbar-brand" href="index.php">
-            Jajan Pisang
+        
+        <a class="navbar-brand d-flex align-items-center" href="index.php" style="padding: 0;">
+            <img src="assets/images/logo-jajanpisang.png" class="navbar-logo" alt="Jajan Pisang">
         </a>
 
-        <button
-            class="navbar-toggler border-0 shadow-none"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarPisangKraf">
-
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarJajanPisang">
             <i class="fas fa-bars fs-4 text-dark"></i>
-
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarPisangKraf">
-
+        <div class="collapse navbar-collapse" id="navbarJajanPisang">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
-
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPage == 'index.php' ? 'active' : '' ?>"
-                       href="index.php">
-                        Home
-                    </a>
+                    <a class="nav-link <?= $currentPage == 'index.php' ? 'active' : '' ?>" href="index.php">Home</a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPage == 'products.php' ? 'active' : '' ?>"
-                       href="products.php">
-                        Products
-                    </a>
+                    <a class="nav-link <?= $currentPage == 'products.php' ? 'active' : '' ?>" href="products.php">Products</a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPage == 'about.php' ? 'active' : '' ?>"
-                       href="about.php">
-                        About
-                    </a>
+                    <a class="nav-link <?= $currentPage == 'about.php' ? 'active' : '' ?>" href="about.php">About</a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link <?= $currentPage == 'contact.php' ? 'active' : '' ?>"
-                       href="contact.php">
-                        Contact
-                    </a>
+                    <a class="nav-link <?= $currentPage == 'contact.php' ? 'active' : '' ?>" href="contact.php">Contact</a>
                 </li>
-
             </ul>
 
             <div class="nav-icons">
-
-                <a href="#" class="icon-link">
-                    <i class="fas fa-search"></i>
-                </a>
-
+                <a href="#" class="icon-link"><i class="fas fa-search"></i></a>
                 <a href="chart.php" class="icon-link">
                     <i class="fas fa-shopping-cart"></i>
-
                     <?php if($cartCount > 0): ?>
-                        <span class="cart-badge">
-                            <?= $cartCount ?>
-                        </span>
+                        <span class="cart-badge"><?= $cartCount ?></span>
                     <?php endif; ?>
                 </a>
 
@@ -307,34 +316,23 @@ if (isset($_SESSION['user_id'])) {
                         <i class="far fa-user"></i>
                     <?php endif; ?>
                 </a>
-
             </div>
-
         </div>
-
     </div>
-
 </nav>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-
     const navbar = document.querySelector('.custom-navbar');
-
     function updateNavbar() {
-
         if(window.scrollY > 50){
             navbar.classList.add('scrolled');
         }else{
             navbar.classList.remove('scrolled');
         }
-
     }
-
     updateNavbar();
-
     window.addEventListener('scroll', updateNavbar);
-
 });
 </script>
-```
+

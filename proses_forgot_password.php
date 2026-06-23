@@ -6,9 +6,9 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PisangKraf | Lupa Kata Sandi</title>
+    <title>Jajan Pisang | Lupa Kata Sandi</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -21,7 +21,7 @@ session_start();
             --secondary: #8A6F00;
             --bg-light: #FAFAFA;
             --card-bg: #FFFFFF;
-            --text-dark: #1F1F1F;
+            --text-dark: rgb(68, 68, 68);
             --text-secondary: #666666;
             --text-muted: #9CA3AF;
             --radius-md: 14px;
@@ -30,7 +30,7 @@ session_start();
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             min-height: 100vh;
@@ -207,7 +207,7 @@ session_start();
             
             <div class="col-lg-6 d-none d-lg-flex login-left">
                 <div class="brand-wrapper">
-                    <h1 class="brand-logo-text">PisangKraf</h1>
+                    <h1 class="brand-logo-text">Jajan Pisang</h1>
                     <p class="brand-slogan">Kelezatan Pisang Dalam Setiap Gigitan</p>
                 </div>
             </div>
@@ -244,3 +244,5 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+

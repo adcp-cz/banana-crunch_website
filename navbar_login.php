@@ -47,7 +47,7 @@ if (isset($_SESSION['user_id'])) {
                 <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link fw-semibold px-4 py-2" href="<?= $path_prefix ?>index.php" 
-                       style="color: #1F1F1F; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 50px; transition: all 0.3s ease;"
+                       style="color: rgb(68, 68, 68); background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 50px; transition: all 0.3s ease;"
                        onmouseover="this.style.backgroundColor='#FFD600'; this.style.borderColor='#FFD600';"
                        onmouseout="this.style.backgroundColor='#F9FAFB'; this.style.borderColor='#E5E7EB';">
                         <i class="fas fa-arrow-left me-2"></i>Kembali ke Beranda
