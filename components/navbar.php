@@ -48,43 +48,49 @@ if (isset($_SESSION['user_id'])) {
 
 <style>
     .custom-navbar {
-        background-color: rgba(255,255,255,0.95);
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow-sm);
-        padding: 15px 0;
-        transition: all 0.3s ease;
+        background-color: rgba(255,255,255,0.85);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        padding: 20px 0;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1030;
+        border-bottom: 1px solid rgba(255,255,255,0.3);
     }
 
     .custom-navbar.scrolled {
-        padding: 10px 0;
-        box-shadow: var(--shadow-md);
+        padding: 12px 0;
+        background-color: rgba(255,255,255,0.95);
+        box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
     }
 
     .navbar-brand {
-        font-family: var(--font-family);
-        font-weight: var(--weight-bold);
-        font-size: var(--text-2xl);
-        color: var(--color-primary-dark) !important;
+        font-family: var(--font-family, 'Poppins', sans-serif);
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #0F172A !important;
         letter-spacing: -0.5px;
+        background: linear-gradient(to right, #0F172A, #CA8A04);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .nav-item {
-        margin: 0 10px;
+        margin: 0 12px;
     }
 
     .nav-link {
-        font-family: var(--font-family);
-        font-weight: var(--weight-medium);
-        font-size: var(--text-base);
-        color: var(--color-text-secondary) !important;
+        font-family: var(--font-family, 'Poppins', sans-serif);
+        font-weight: 500;
+        font-size: 1rem;
+        color: #64748B !important;
         position: relative;
         padding: 8px 0 !important;
         transition: all .3s ease;
     }
 
     .nav-link:hover {
-        color: var(--color-text) !important;
+        color: #0F172A !important;
     }
 
     .nav-link::after {
@@ -94,7 +100,7 @@ if (isset($_SESSION['user_id'])) {
         height: 2px;
         bottom: 0;
         left: 50%;
-        background-color: var(--color-primary);
+        background-color: #FACC15;
         transition: all .3s ease;
         transform: translateX(-50%);
         border-radius: 999px;
@@ -106,43 +112,49 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .nav-link.active {
-        color: var(--color-text) !important;
-        font-weight: var(--weight-semibold);
+        color: #0F172A !important;
+        font-weight: 600;
     }
 
     .nav-icons {
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
 
     .icon-link {
-        color: var(--color-text);
-        font-size: var(--text-lg);
+        color: #0F172A;
+        font-size: 1.15rem;
         position: relative;
         transition: all .3s ease;
         display: flex;
         align-items: center;
+        justify-content: center;
         text-decoration: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #F8FAFC;
     }
 
     .icon-link:hover {
-        color: var(--color-primary-dark);
+        background: #FACC15;
+        color: #0F172A;
         transform: translateY(-2px);
     }
 
     .user-initials-circle {
-        width: 35px;
-        height: 35px;
-        background-color: #FFD600;
-        color: #8A6F00;
+        width: 40px;
+        height: 40px;
+        background-color: #FACC15;
+        color: #CA8A04;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 700;
         font-size: 14px;
-        border: 2px solid #8A6F00;
+        border: 2px solid transparent;
         transition: all 0.3s ease;
         overflow: hidden;
     }
@@ -154,26 +166,25 @@ if (isset($_SESSION['user_id'])) {
     }
 
     .icon-link:hover .user-initials-circle {
-        background-color: #8A6F00;
-        color: #FFD600;
-        border-color: #FFD600;
+        background-color: #CA8A04;
+        color: #FACC15;
     }
 
-    .cart-badge{
+    .cart-badge {
         position:absolute;
-        top:-8px;
-        right:-10px;
-        min-width:20px;
-        height:20px;
+        top:-5px;
+        right:-5px;
+        min-width:22px;
+        height:22px;
         display:flex;
         align-items:center;
         justify-content:center;
         border-radius:50%;
-        font-size:11px;
+        font-size:12px;
         font-weight:bold;
-        background:#FFD600;
-        color:#000;
-        border:2px solid white;
+        background:#CA8A04;
+        color:#fff;
+        border:2px solid #fff;
     }
 
     @media (max-width: 991.98px) {

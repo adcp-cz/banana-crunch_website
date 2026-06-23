@@ -20,7 +20,7 @@ if (isset($_GET['del'])) {
     $query_hapus = "DELETE FROM cart WHERE id = $id_hapus AND user_id = $user_id";
     mysqli_query($koneksi, $query_hapus);
     
-    header("Location: cart.php"); 
+    header("Location: chart.php"); 
     exit();
 }
 
@@ -182,7 +182,7 @@ $jumlah_item = mysqli_num_rows($result);
 
                                         <div class="item-actions mt-2">
                                             <div class="badge bg-light text-dark border">Qty: <?= $item['qty'] ?></div>
-                                            <a href="cart.php?del=<?= $item['cart_id'] ?>" class="btn-delete-item" onclick="return confirm('Hapus produk ini dari keranjang?');" title="Hapus Item">
+                                            <a href="chart.php?del=<?= $item['cart_id'] ?>" class="btn-delete-item" onclick="return confirm('Hapus produk ini dari keranjang?');" title="Hapus Item">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </div>
