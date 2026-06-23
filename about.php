@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-lg-6" data-aos="fade-left">
                     <h2 class="fw-bold mb-4">Filosofi Kami</h2>
-                    <p class="mb-4 text-muted">Didirikan di Purwokerto, Jajan Pisang lahir dari kecintaan kami terhadap potensi hasil bumi Indonesia. Kami percaya bahwa pengolahan yang tepatâ€”mulai dari pemilihan bahan baku hingga proses produksiâ€”dapat mengangkat derajat produk lokal ke taraf premium.</p>
+                    <p class="mb-4 text-muted">Didirikan di Purwokerto, Jajan Pisang lahir dari kecintaan kami terhadap potensi hasil bumi Indonesia. Kami percaya bahwa pengolahan yang tepat mulai dari pemilihan bahan baku hingga proses produksi dapat mengangkat derajat produk lokal ke taraf premium.</p>
                     <p class="text-muted">Fokus kami bukan sekadar berjualan, melainkan membangun ekosistem yang menghubungkan kualitas petani dengan keinginan konsumen akan camilan yang sehat, alami, dan autentik.</p>
                 </div>
             </div>

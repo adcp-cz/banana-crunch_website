@@ -411,7 +411,7 @@ $result = mysqli_query($koneksi, $query);
         <div class="container hero-content" data-aos="fade-up">
             <div class="section-pill text-white" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5);">Selamat Datang di Jajan Pisang</div>
             <h1 class="hero-title">CITA RASA PISANG<br>TRADISIONAL & MODERN</h1>
-            <p class="hero-desc">Pusat Oleh-Oleh dan Camilan Nusantara Khas Banyumas</p>
+            <p class="hero-desc">Pusat Oleh-Oleh dan Camilan Pisang Nusantara Khas Banyumas</p>
             <a href="#tentang" class="btn-hero-outline">SELENGKAPNYA</a>
         </div>
     </header>
